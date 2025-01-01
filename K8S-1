@@ -89,6 +89,24 @@ kubectl rollout restart deployment <deployment-name>
 
 # Rollback a deployment
 kubectl rollout undo deployment <deployment-name>
+
+# The kubectl command to delete a deployment is:
+kubectl delete deployment <deployment-name>
+
+Examples:
+# Delete a Deployment in the Default Namespace:
+kubectl delete deployment my-deployment
+
+# Delete a Deployment in a Specific Namespace:
+kubectl delete deployment my-deployment -n my-namespace
+
+# Force Delete a Deployment (bypasses graceful deletion):
+kubectl delete deployment my-deployment --force --grace-period=0
+
+# Delete All Deployments in a Namespace:
+kubectl delete deployment --all -n my-namespace
+
+
 ________________________________________
 Service Operations
 # List services
