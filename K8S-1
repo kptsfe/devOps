@@ -1,0 +1,193 @@
+Here is a comprehensive list of commonly used kubectl commands organized by their purpose. This list is not exhaustive but covers most daily Kubernetes operations.
+________________________________________
+Cluster Information and Context Management
+# View cluster info
+kubectl cluster-info
+
+# List available contexts
+kubectl config get-contexts
+
+# Switch to a context
+kubectl config use-context <context-name>
+
+# View the current context
+kubectl config current-context
+________________________________________
+Namespace Operations
+# List namespaces
+kubectl get namespaces
+
+# Create a namespace
+kubectl create namespace <namespace-name>
+
+# Delete a namespace
+kubectl delete namespace <namespace-name>
+
+# Set a default namespace for a context
+kubectl config set-context --current --namespace=<namespace-name>
+________________________________________
+Node Operations
+# List nodes
+kubectl get nodes
+
+# Get detailed information about a node
+kubectl describe node <node-name>
+
+# Cordon a node (prevent new pods from scheduling)
+kubectl cordon <node-name>
+
+# Uncordon a node
+kubectl uncordon <node-name>
+
+# Drain a node (evict all pods)
+kubectl drain <node-name> --ignore-daemonsets
+________________________________________
+Pod Operations
+# List pods
+kubectl get pods
+kubectl get pods -n <namespace>
+
+# Get detailed information about a pod
+kubectl describe pod <pod-name>
+kubectl describe pod <pod-name> -n <namespace>
+
+# Create a pod (from a YAML file)
+kubectl apply -f <pod.yaml>
+
+# Delete a pod
+kubectl delete pod <pod-name>
+kubectl delete pod <pod-name> -n <namespace>
+
+# Stream pod logs
+kubectl logs <pod-name>
+kubectl logs <pod-name> -n <namespace>
+
+# Stream logs for a specific container in a pod
+kubectl logs <pod-name> -c <container-name>
+
+# Execute a command inside a pod
+kubectl exec -it <pod-name> -- <command>
+kubectl exec -it <pod-name> -n <namespace> -- <command>
+________________________________________
+Deployment Operations
+# List deployments
+kubectl get deployments
+kubectl get deployments -n <namespace>
+
+# Get detailed information about a deployment
+kubectl describe deployment <deployment-name>
+kubectl describe deployment <deployment-name> -n <namespace>
+
+# Scale a deployment
+kubectl scale deployment <deployment-name> --replicas=<number>
+
+# Update a deployment (e.g., image)
+kubectl set image deployment/<deployment-name> <container-name>=<new-image>
+
+# Restart a deployment
+kubectl rollout restart deployment <deployment-name>
+
+# Rollback a deployment
+kubectl rollout undo deployment <deployment-name>
+________________________________________
+Service Operations
+# List services
+kubectl get services
+kubectl get svc -n <namespace>
+
+# Get detailed information about a service
+kubectl describe service <service-name>
+kubectl describe svc <service-name> -n <namespace>
+
+# Create a service (from a YAML file)
+kubectl apply -f <service.yaml>
+
+# Delete a service
+kubectl delete service <service-name>
+kubectl delete svc <service-name> -n <namespace>
+________________________________________
+ConfigMap and Secret Operations
+# List ConfigMaps
+kubectl get configmaps
+kubectl get configmaps -n <namespace>
+
+# Create a ConfigMap
+kubectl create configmap <configmap-name> --from-literal=<key>=<value>
+kubectl create configmap <configmap-name> --from-file=<path>
+
+# Delete a ConfigMap
+kubectl delete configmap <configmap-name>
+
+# List Secrets
+kubectl get secrets
+kubectl get secrets -n <namespace>
+
+# Create a Secret
+kubectl create secret generic <secret-name> --from-literal=<key>=<value>
+kubectl create secret generic <secret-name> --from-file=<path>
+
+# Delete a Secret
+kubectl delete secret <secret-name>
+________________________________________
+Ingress Operations
+# List Ingress resources
+kubectl get ingress
+kubectl get ingress -n <namespace>
+
+# Get detailed information about an Ingress resource
+kubectl describe ingress <ingress-name>
+kubectl describe ingress <ingress-name> -n <namespace>
+
+# Create an Ingress resource (from a YAML file)
+kubectl apply -f <ingress.yaml>
+
+# Delete an Ingress resource
+kubectl delete ingress <ingress-name>
+________________________________________
+Job and CronJob Operations
+# List jobs
+kubectl get jobs
+kubectl get jobs -n <namespace>
+
+# List CronJobs
+kubectl get cronjobs
+kubectl get cronjobs -n <namespace>
+
+# Delete a job
+kubectl delete job <job-name>
+kubectl delete job <job-name> -n <namespace>
+
+# Delete a CronJob
+kubectl delete cronjob <cronjob-name>
+kubectl delete cronjob <cronjob-name> -n <namespace>
+________________________________________
+Resource Management
+# Apply a YAML file
+kubectl apply -f <resource.yaml>
+
+# Delete resources defined in a YAML file
+kubectl delete -f <resource.yaml>
+
+# View the status of all resources
+kubectl get all
+
+# View resource usage (requires metrics-server)
+kubectl top pods
+kubectl top nodes
+________________________________________
+Miscellaneous Commands
+# Show cluster events
+kubectl get events
+kubectl get events -n <namespace>
+
+# View API resources
+kubectl api-resources
+
+# View resource details
+kubectl explain <resource>
+kubectl explain <resource>.<group>
+
+# Delete all resources of a type
+kubectl delete <resource-type> --all
+
+
