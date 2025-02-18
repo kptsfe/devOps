@@ -1,0 +1,88 @@
+
+
+
+To install the Apache HTTP Server on Ubuntu, follow these steps:
+
+ 
+
+Update the Package Index:
+
+sudo apt update
+
+ 
+
+Install Apache:
+
+sudo apt install apache2 -y
+
+ 
+
+Start and Enable Apache:
+
+sudo systemctl start apache2
+
+sudo systemctl enable apache2
+
+ 
+
+Adjust Firewall Settings: If you are using ufw (Uncomplicated Firewall), allow traffic on port 80 (HTTP) and optionally port 443 (HTTPS):
+
+sudo ufw allow 'Apache'
+
+sudo ufw allow 'Apache Full'
+
+sudo ufw reload
+
+ 
+
+Verify Apache Installation: Open a web browser and navigate to your server’s IP address. You should see the Apache default welcome page, confirming that Apache is running.
+
+Add Your Content: Place your website files in the /var/www/html/ directory. This is the default document root for Apache.
+
+Configure Apache (Optional): Edit the Apache configuration file located at /etc/apache2/apache2.conf to customize your server settings.
+
+Restart Apache: After making any changes to the configuration file, restart Apache to apply the changes:
+
+sudo systemctl restart apache2
+
+ 
+
+RHEL:
+
+ 
+
+Install Apache:
+
+sudo dnf install httpd -y
+
+ 
+
+Start and Enable Apache:
+
+sudo systemctl start httpd
+
+sudo systemctl enable httpd
+
+ 
+
+Open Firewall Port: If you are using firewalld, you need to open port 80 (HTTP) and optionally port 443 (HTTPS):
+
+sudo firewall-cmd --permanent --add-service=http
+
+sudo firewall-cmd --permanent --add-service=https
+
+sudo firewall-cmd --reload
+
+ 
+
+Test Apache Installation: Open a web browser and navigate to your server’s IP address. You should see the Apache test page, which confirms that Apache is running.
+
+Add Your Content: Place your website files in the /var/www/html/ directory. The default document root for Apache is /var/www/html.
+
+Configure Apache (Optional): You can edit the Apache configuration file located at /etc/httpd/conf/httpd.conf to customize your server settings.
+
+Restart Apache: After making any changes to the configuration file, restart Apache to apply the changes:
+
+sudo systemctl restart httpd
+
+ 

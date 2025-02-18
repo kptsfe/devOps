@@ -1,0 +1,54 @@
+<VirtualHost *:80>
+    DocumentRoot "/var/www/example.com/"
+    ServerName example.com
+    CustomLog /var/log/httpd/example.com_access.log combined
+    ErrorLog /var/log/httpd/example.com_error.log
+</VirtualHost>
+
+
+	52.90.84.215	example.com
+	52.90.84.215	example.net
+	
+	
+	
+	https://portal.hdfc.com/login
+	
+	729000/2080
+	
+	https://www.middlewareinventory.com/blog/sample-web-application-war-file-download/#google_vignette
+	
+Asdfgf@111
+kramkumar100@gmail.com
+
+---------------------------------------------------------------------------------------------------------------
+https://tomcat.apache.org/download-90.cgi
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
+
+
+https://tomcat.apache.org/download-10.cgi
+https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.tar.gz
+
+
+cd /opt/
+
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
+
+sudo tar -xvzf /opt/apache-tomcat-9.0.97.tar.gz
+chmod 777 apache-tomcat-9.0.97
+
+
+If you want to set a password for the root user, you can do so by switching to root and then running:
+sudo passwd root
+
+sudo su -
+
+<sudo passwd root>
+
+sudo chmod +x /opt/apache-tomcat-9.0.97/bin/
+
+ln -s /opt/apache-tomcat-9.0.97/bin/startup.sh /usr/local/bin/tomcatStart
+
+ln -s /opt/apache-tomcat-9.0.97/bin/shutdown.sh /usr/local/bin/tomcatStop
+
+
+Differences Between sudo -i, sudo su, and sudo -s:

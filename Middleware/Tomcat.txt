@@ -1,0 +1,108 @@
+https://tomcat.apache.org/download-90.cgi
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
+
+
+https://tomcat.apache.org/download-10.cgi
+https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.tar.gz
+
+
+cd /opt/
+
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
+
+sudo tar -xvzf /opt/apache-tomcat-9.0.97.tar.gz
+chmod 777 apache-tomcat-9.0.97
+
+
+If you want to set a password for the root user, you can do so by switching to root and then running:
+sudo passwd root
+
+sudo su -
+
+<sudo passwd root>
+
+sudo chmod +x /opt/apache-tomcat-9.0.97/bin/
+
+ln -s /opt/apache-tomcat-9.0.97/bin/startup.sh /usr/local/bin/tomcatStart
+
+ln -s /opt/apache-tomcat-9.0.97/bin/shutdown.sh /usr/local/bin/tomcatStop
+
+
+Differences Between sudo -i, sudo su, and sudo -s:
+--
+
+connect EC2 machine
+sudo -i
+check java installed?
+install java
+sudo yum install -y java-17-openjdk
+confirm java version
+java -version
+\
+java installed path
+cd /usr/lib/jvm/java-17-openjdk-17.0.13.0.11-4.el9.x86_64/
+
+in user home directory
+ll -a
+.bash_profile
+
+vi .bash_profile
+set 
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.13.0.11-4.el9.x86_64/
+PATH=$PATH:$HOME/bin:$JAVA_HOME
+
+yum install wget
+
+
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
+
+cd /opt/
+tar -xvf apache-tomcat-9.0.97.tar.gz
+
+cd apache-tomcat-9.0.97
+
+cd bin/
+chmod +x startup.sh shutdown.sh
+
+ln -s /opt/apache-tomcat-9.0.97/bin/startup.sh /usr/local/sbin/tomcatStart
+
+ln -s /opt/apache-tomcat-9.0.97/bin/shutdown.sh /usr/local/sbin/tomcatStop
+
+
+tomcatStart
+
+
+find / -name context.xml
+
+
+cd /opt/apache-tomcat-9.0.97/webapps/manager/META-INF/
+vi context.xml (comment)
+
+cd /opt/apache-tomcat-9.0.97/webapps/host-manager/META-INF/
+vi context.xml (comment)
+
+tomcatStop
+tomcatStart
+
+cd /opt/apache-tomcat-9.0.97/conf
+vi tomcat-users.xml
+
+<role rolename="manager-gui"/>
+<role rolename="admin-gui"/>
+<user username="admin" password="password" roles="manager-gui,admin-gui"/>
+
+vi server.xml
+change the port-9090
+tomcatStop
+tomcatStart
+
+check portal
+
+http://34.233.126.49:9090/SampleWebApp
+
+divyadharshini1321.07@gmail.com
+Pwd : Clouddocs@123
+
+
+https://us-east-1.student.classrooms.aws.training/class/vTro5mrqqv8vfb3xUNrobm
+

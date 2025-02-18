@@ -1,0 +1,53 @@
+# Define parameters for the CSR
+$SubjectName = "CN=xyz.example.com, OU=IT, O=Ericsson AB, L=Stockholm, S=Stockholm, C=SE"
+$FriendlyName = "xyz.example.com"
+$DNSName = "abc.example.com"
+$OutputPath = "C:\temp\CSR123.req"
+
+# Create a temporary INF file for the CSR configuration
+$CSRConfig = @"
+[Version]
+Signature="$Windows NT$"
+
+[NewRequest]
+Subject = "$SubjectName"
+FriendlyName = "$FriendlyName"
+KeySpec = 1
+KeyLength = 2048
+Exportable = TRUE
+MachineKeySet = TRUE
+KeyUsage = 0xA0
+ProviderName = "Microsoft RSA SChannel Cryptographic Provider"
+ProviderType = 12
+RequestType = PKCS10
+
+[Extensions]
+2.5.29.17 = "{text}"
+_continue_ = "dns=$DNSName"
+
+[EnhancedKeyUsageExtension]
+OID=1.3.6.1.5.5.7.3.1 ; Server Authentication
+OID=1.3.6.1.5.5.7.3.2 ; Client Authentication
+"@
+
+# Define the path for the INF file
+$CSRConfigPath = "C:\temp\CSRConfig.inf"
+
+# Ensure the temp directory exists
+if (!(Test-Path -Path "C:\temp")) {
+    New-Item -Path "C:\temp" -ItemType Directory | Out-Null
+}
+
+# Write the configuration to the INF file
+Set-Content -Path $CSRConfigPath -Value $CSRConfig
+
+# Generate the CSR using certreq.exe
+try {
+    certreq.exe -new $CSRConfigPath $OutputPath
+    Write-Host "CSR successfully created at $OutputPath" -ForegroundColor Green
+} catch {
+    Write-Error "Failed to create CSR: $_"
+}
+
+# Clean up the INF file
+Remove-Item -Path $CSRConfigPath -Force

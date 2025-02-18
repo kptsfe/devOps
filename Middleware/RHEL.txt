@@ -1,0 +1,64 @@
+https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/deploying_web_servers_and_reverse_proxies/setting-apache-http-server_deploying-web-servers-and-reverse-proxies#con-the-apache-configuration-files_setting-apache-http-server
+
+
+Install Apache:
+
+sudo dnf install httpd -y
+
+ 
+
+Start and Enable Apache:
+
+sudo systemctl start httpd
+
+sudo systemctl enable httpd
+
+ 
+
+Open Firewall Port: If you are using firewalld, you need to open port 80 (HTTP) and optionally port 443 (HTTPS):
+
+sudo firewall-cmd --permanent --add-service=http
+
+sudo firewall-cmd --permanent --add-service=https
+
+
+
+sudo firewall-cmd --reload
+
+ 
+
+Test Apache Installation: Open a web browser and navigate to your server’s IP address. You should see the Apache test page, which confirms that Apache is running.
+
+Add Your Content: Place your website files in the /var/www/html/ directory. The default document root for Apache is /var/www/html.
+
+Configure Apache (Optional): You can edit the Apache configuration file located at /etc/httpd/conf/httpd.conf to customize your server settings.
+
+Restart Apache: After making any changes to the configuration file, restart Apache to apply the changes:
+
+sudo systemctl restart httpd
+
+----------------------------------------------------------------
+(Optional)
+firewall-cmd --permanent --add-port=80/tcp
+systemctl enable --now httpd
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/example.com/"
+    ServerName example.com
+    CustomLog /var/log/httpd/example.com_access.log combined
+    ErrorLog /var/log/httpd/example.com_error.log
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/example.net/"
+    ServerName example.net
+    CustomLog /var/log/httpd/example.net_access.log combined
+    ErrorLog /var/log/httpd/example.net_error.log
+</VirtualHost>
+
+mkdir /var/www/example.com/
+mkdir /var/www/example.net/
+
+echo "vHost example.com" > /var/www/example.com/index.html
+echo "vHost example.net" > /var/www/example.net/index.html
+

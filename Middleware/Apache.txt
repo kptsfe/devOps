@@ -1,0 +1,61 @@
+Apache Installation:
+
+Ubuntu:
+=======
+## Update your package index:
+sudo apt update
+
+## Install Apache:
+sudo apt install apache2
+
+## Adjust the firewall settings to allow web traffic:
+sudo ufw allow 'Apache'
+
+## Verify Apache installation by checking the status:
+sudo systemctl status apache2
+
+## Access Apache default page by entering your server's IP address in a web browser. You should see the Apache2 Ubuntu Default Page if everything is set up correctly.
+
+ 
+
+RHEL:
+=====
+## Update your package index:
+sudo dnf update
+
+## Install Apache:
+sudo dnf install httpd
+
+## Start and enable Apache to run on boot:
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+## Adjust the firewall settings to allow web traffic:
+sudo firewall-cmd --zone=public --permanent --add-service=http
+sudo firewall-cmd --reload
+
+## Verify Apache installation by checking the status:
+sudo systemctl status httpd
+
+## Access Apache default page by entering your server's IP address in a web browser. You should see the Apache HTTP Server Test Page if everything is set up correctly
+
+
+Basics:
+=======
+
+yum & dnf:
+---------
+yum (Yellowdog Updater, Modified) is the older package manager.
+dnf (Dandified YUM) is the next-generation version of yum, designed to address some of its limitations.
+yum is written in Python 2.
+dnf is written in Python 3.
+In summary, dnf is a more modern, efficient, and reliable package manager compared to yum, and it is the default package manager in newer versions of RHEL and Fedora.
+
+ 
+apt & dnf:
+---------
+apt is used in Debian-based distributions like Ubuntu.
+dnf is used in Red Hat-based distributions like Fedora and RHEL.
+apt commands include apt install, apt remove, apt update, apt upgrade, etc.
+dnf commands include dnf install, dnf remove, dnf update, dnf upgrade, etc.
+apt is backward compatible with apt-get and apt-cache.

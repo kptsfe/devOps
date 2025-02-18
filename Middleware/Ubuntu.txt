@@ -1,0 +1,147 @@
+https://www.makeuseof.com/a-step-by-step-guide-to-installing-apache-tomcat-linux/
+
+Ubuntu:
+#######
+ 
+
+Install Apache in Ubuntu Linux:
+
+sudo apt update
+
+sudo apt install apache2 -y
+
+ 
+
+Linux version finding:
+
+hostnamectl or
+
+lsb_release -a
+
+ 
+
+IP address finding:
+
+ip a
+
+ip addr show eth0
+
+ip addr show wlan0
+
+ 
+
+Browse IP to get the page:
+
+ 
+
+default basic site:/var/www/html/Index.html
+
+Virtual Host file found in: /etc/apache2/sites-enabled/000-default.conf
+
+ 
+
+Creating Your Own Website:
+
+sudo mkdir /var/www/web1
+
+sudo vi index.html
+
+ 
+
+Paste the following code in the index.html file:
+
+ 
+
+<html>
+
+<head>
+
+  <title> Ubuntu rocks! </title>
+
+</head>
+
+<body>
+
+  <p> I'm running this website on an Ubuntu Server server!
+
+</body>
+
+</html>
+
+ 
+
+ 
+
+Setting up the VirtualHost Configuration File:
+
+cd /etc/apache2/sites-available/
+
+sudo cp 000-default.conf web1.conf
+
+ 
+
+Edit:
+
+sudo vi web1.conf
+
+DocumentRoot /var/www/web1/
+
+web1.example.com
+
+ 
+
+Activating VirtualHost file:
+
+sudo a2dissite 000-default.conf
+
+sudo a2ensite web1.conf
+
+sudo systemctl reload apache2
+
+ 
+
+Firewall status check:
+
+sudo ufw status
+
+ 
+
+Service Status/Start/Stop/Restart/:
+
+sudo systemctl status apache2
+
+sudo systemctl start apache2
+
+sudo systemctl stop apache2
+
+sudo systemctl restart apache2
+
+ 
+
+ 
+
+To ensure Apache 2 starts automatically when your system boots:
+
+sudo systemctl enable apache2
+
+ 
+
+Gracefully restarts the Apache service. The main Apache process shuts down the child processes, loads the new configuration, and starts new child processes:
+
+sudo systemctl reload apache2
+
+ 
+
+ 
+
+ 
+
+Service Status/Start/Stop/Restart (RHEL/CentOS):
+
+sudo systemctl status httpd
+
+sudo systemctl start httpd
+
+sudo systemctl stop httpd
+
+sudo systemctl restart httpd
