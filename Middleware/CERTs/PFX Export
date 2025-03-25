@@ -1,0 +1,20 @@
+PFX Export from cert windows store.
+----------------------------------
+# Define the names of the certificates you want to export
+$issuedToNames = @("CERTIFICATE_NAME_1", "CERTIFICATE_NAME_2")
+
+# Define the path where you want to save the PFX files
+$outputPath = "C:\path\to\your\certificates\"
+
+# Define the password for the PFX files
+$pfxPassword = ConvertTo-SecureString -String "YOUR_PASSWORD" -Force -AsPlainText
+
+# Export the certificates
+foreach ($issuedTo in $issuedToNames) {
+    $certs = Get-ChildItem -Path Cert:\LocalMachine\My | Where-Object { $_.Subject -like "*CN=$issuedTo*" }
+    foreach ($cert in $certs) {
+        $fileName = "$outputPath$issuedTo.pfx"
+        $cert | Export-PfxCertificate -FilePath $fileName -Password $pfxPassword
+        Write-Output "Certificate issued to $issuedTo exported successfully to $fileName"
+    }
+}
