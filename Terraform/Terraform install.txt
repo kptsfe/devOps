@@ -1,1 +1,80 @@
-d
+Install Terraform:
+First, download and install Terraform from the official website:
+🔗 https://developer.hashicorp.com/terraform/downloads
+Verify the installation:
+terraform -version or terraform --version or terraform -v
+goto aws console -> my security credential -> access key & secret access key
+create directory -> terraform-aws
+create terraform file ->  main.tf
+----------------------------------
+provider "aws" {
+  region = "us-west-1"  # Change this as needed
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0f9de6e2d2f067fca"  # Replace with a valid AMI ID, search under AMI in console
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Terraform-EC2"
+  }
+}
+-----------------------------------------
+----------------------------------
+provider "aws" {
+  region = "us-west-1"  # Change this as needed
+  aws_access_key_id = "1"
+  aws_secret_access_key = "2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-04f7a54071e74f488"  # Replace with a valid AMI ID, search under AMI in console
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Terraform-EC2"
+  }
+}
+-----------------------------------------
+
+
+
+AWS Credentials Setup:
+mkdir -p ~/.aws
+
+echo "[default]
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+region = us-east-1" > ~/.awstest/credentials
+
+The above commands are setting up AWS credentials locally so Terraform (or any AWS SDK/CLI tool) can authenticate with AWS.
+
+Breaking Down Each Command:
+1. mkdir -p ~/.aws
+Creates the .aws directory in the user's home folder (~).
+-p ensures that the directory is created only if it doesn't already exist.
+
+2. echo "[default] ... > ~/.aws/credentials"
+Writes AWS credentials into the ~/.aws/credentials file.
+This file is used by AWS CLI, Terraform, and other AWS SDKs for authentication.
+[default] → Profile name (default profile used unless specified otherwise).
+aws_access_key_id → Your AWS Access Key.
+aws_secret_access_key → Your AWS Secret Key.
+region → Specifies the default AWS region (e.g., us-east-1 for N. Virginia).
+
+Effect of Running This Command:
+The AWS CLI and Terraform can now authenticate using these stored credentials.
+No need to manually enter credentials every time you run an AWS command.
+If you want to use multiple AWS profiles, you can add more profiles inside ~/.aws/credentials and specify them in Terraform.
+
+aws configure list
+Terraform commands:
+terraform init
+terraform validate
+terraform plan -out=tfplan
+terraform apply "tfplan"
+
+terraform apply -auto-approve
+terraform destroy -auto-approve
+
+
