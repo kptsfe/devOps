@@ -15,7 +15,8 @@ Creating an Azure DevOps Project
 Azure DevOps Pricing
 Azure DevOps hosting options: Azure DevOps Services VS Azure DevOps Server
 
-
+Day-1:
+-----
 Traditional:Waterfall:Agile
 Requiremeent
 System design
@@ -37,3 +38,4 @@ Monitor
 CI-Plan,Code,Build,Test
 CD-Release,Deploy
 CM-Operate,Monitor
+
