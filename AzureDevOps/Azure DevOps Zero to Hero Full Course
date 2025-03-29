@@ -1,0 +1,39 @@
+𝗕𝘆 𝘁𝗵𝗲 𝗲𝗻𝗱 𝗼𝗳 𝘁𝗵𝗲 𝘃𝗶𝗱𝗲𝗼, 𝘆𝗼𝘂 𝘄𝗶𝗹𝗹 𝗹𝗲𝗮𝗿𝗻 𝘁𝗵𝗲 𝗳𝗼𝗹𝗹𝗼𝘄𝗶𝗻𝗴: Day-1/16 
+
+What is Cloud Computing
+IaaS VS PaaS VS SaaS
+What is a Shared Responsibility Model
+What is a Traditional Build and Deployment workflow
+What is a Waterfall model in SDLC
+Problems with the traditional software development life cycle (SDLC)
+What is Agile, and how does it solve the above challenges 
+What is DevOps and Why It Matters
+What is CI/CD
+What is Azure DevOps and a quick walkthrough
+Creating an Azure DevOps Organization
+Creating an Azure DevOps Project
+Azure DevOps Pricing
+Azure DevOps hosting options: Azure DevOps Services VS Azure DevOps Server
+
+
+Traditional:Waterfall:Agile
+Requiremeent
+System design
+Implement
+Testing
+Deployment
+Maintenance
+
+DevOps:
+Plan
+Code
+Build
+Test
+Release
+Deploy
+Operate
+Monitor
+
+CI-Plan,Code,Build,Test
+CD-Release,Deploy
+CM-Operate,Monitor
