@@ -42,3 +42,138 @@ CI-Plan,Code,Build,Test
 CD-Release,Deploy
 CM-Operate,Monitor
 
+Sign up for Azure DevOps by clicking:
+https://azure.microsoft.com/en-us/products/devops/
+
+Region 
+Organization
+Project
+Organization Settings/Project Settings
+
+1. Azure DevOps Services
+Azure DevOps consists of several core services:
+a. Azure Repos (Source Control)
+•	Supports Git (distributed) and TFVC (centralized).
+•	Helps teams collaborate on code using branching, merging, and pull requests.
+b. Azure Pipelines (CI/CD)
+•	Automates build and release processes.
+•	Supports Continuous Integration (CI) to test code automatically.
+•	Supports Continuous Deployment (CD) to deploy applications across environments.
+•	Works with multiple platforms (Windows, Linux, macOS) and supports YAML-based pipeline definitions.
+c. Azure Boards (Project Management)
+•	Provides Kanban boards, Scrum boards, and backlog management.
+•	Helps teams track work items, issues, and sprints.
+d. Azure Test Plans (Testing)
+•	Supports manual and automated testing.
+•	Helps in tracking test cases, test execution, and reporting.
+e. Azure Artifacts (Package Management)
+•	Provides a repository for storing NuGet, npm, Maven, and Python packages.
+•	Helps manage dependencies securely.
+________________________________________
+2. CI/CD Workflow in Azure DevOps
+A typical CI/CD pipeline in Azure DevOps follows these steps:
+1.	Developers push code to Azure Repos.
+2.	CI Pipeline triggers automated builds and tests.
+3.	Artifacts (built files) are stored in Azure Artifacts.
+4.	CD Pipeline deploys the application to various environments.
+5.	Monitoring and feedback loop ensures continuous improvement.
+________________________________________
+3. Key Features
+•	YAML-based Pipelines – Infrastructure as Code (IaC) for defining pipelines.
+•	Multi-stage Pipelines – Supports different environments like Dev, QA, Staging, and Prod.
+•	Service Connections – Secure integration with external tools like AWS, Docker, Kubernetes.
+•	Agent Pools – Manages self-hosted or Microsoft-hosted build agents.
+________________________________________
+4. Security & Access Control
+•	Azure DevOps Policies (branch policies, approval gates).
+•	Role-Based Access Control (RBAC) to manage permissions.
+•	Secure Secrets Management using Azure Key Vault.
+========================================
+
+Azure DevOps Organization
+An Azure DevOps Organization is the top-level container in Azure DevOps that holds projects, users, and services. It provides centralized management for DevOps processes.
+________________________________________
+1. Structure of an Azure DevOps Organization
+An organization consists of:
+•	Projects – Containers for code, pipelines, and artifacts.
+•	Teams – Groups within projects for collaboration.
+•	Repositories – Source code storage (Git/TFVC).
+•	Pipelines – CI/CD workflows for automation.
+•	Users & Permissions – Role-based access control (RBAC).
+
+Azure DevOps Projects
+A Project in Azure DevOps is a container that holds source code, pipelines, work items, and other DevOps resources. It helps teams collaborate efficiently while keeping resources organized.
+________________________________________
+1. Features of an Azure DevOps Project
+Each project contains the following key components:
+a. Repositories (Azure Repos)
+•	Stores source code using Git (distributed) or TFVC (centralized).
+•	Supports branching, pull requests, and code reviews.
+b. Pipelines (Azure Pipelines)
+•	Automates CI/CD workflows for building, testing, and deploying applications.
+•	Can be configured using YAML or Classic Editor.
+c. Boards (Azure Boards)
+•	Helps in agile project management using work items, sprints, and Kanban boards.
+•	Tracks bugs, tasks, and user stories.
+d. Test Plans (Azure Test Plans)
+•	Supports manual, exploratory, and automated testing.
+•	Helps teams track and improve software quality.
+e. Artifacts (Azure Artifacts)
+•	Stores package dependencies (NuGet, npm, Maven, etc.) for projects.
+•	Ensures secure and scalable package management.
+________________________________________
+
+Azure DevOps Server vs. Azure DevOps Services
+Azure DevOps is available in two deployment options:
+1.	Azure DevOps Services (Cloud-based, SaaS)
+2.	Azure DevOps Server (On-premises, self-hosted)
+________________________________________
+1. Azure DevOps Services (Cloud-based SaaS)
+Azure DevOps Services is a fully managed cloud-based DevOps solution hosted by Microsoft.
+________________________________________
+2. Azure DevOps Server (On-Premises, Self-Hosted)
+Azure DevOps Server is an on-premises version of Azure DevOps for organizations needing full control over infrastructure and security.
+
+Git vs. TFVC in Azure DevOps
+Azure DevOps supports two types of version control systems:
+1.	Git – A distributed version control system (DVCS).
+2.	TFVC (Team Foundation Version Control) – A centralized version control system (CVCS).
+________________________________________
+1. Git (Distributed Version Control System - DVCS)
+Git is the most widely used version control system and is the default in Azure DevOps.
+Key Features:
+✔ Distributed Version Control – Every developer has a full copy of the repository.
+✔ Branching & Merging – Lightweight branches for parallel development.
+✔ Pull Requests & Code Reviews – Enables team collaboration.
+✔ Offline Work – Changes can be made without an internet connection.
+✔ Integrates with CI/CD – Works seamlessly with Azure Pipelines.
+Best For:
+✅ Agile teams using modern DevOps practices.
+✅ Projects requiring frequent branching and merging.
+✅ Teams working remotely or offline.
+________________________________________
+2. TFVC (Team Foundation Version Control - Centralized)
+TFVC is a centralized version control system used in legacy projects.
+Key Features:
+✔ Central Repository – All code is stored in a central server.
+✔ Check-in/Check-out Model – Prevents multiple people from editing the same file.
+✔ History Stored on Server – Easier access to project history.
+✔ Permissions on File Level – More granular access control.
+Best For:
+✅ Large enterprises with strict version control policies.
+✅ Projects requiring file-based security and permissions.
+✅ Teams that prefer centralized control over code changes.
+________________________________________
+3. Key Differences:
+Feature	Git         (DVCS)	              TFVC (CVCS)
+Repository	        Local & Remote	      Centralized
+Branching	          Fast & lightweight	  Heavy & expensive
+Merging	            Frequent & easy	      Less frequent, complex
+Work Offline?      	Yes	                  No
+Code History      	Local & Server	      Server only
+Check-in/Check-out	No	                  Yes (exclusive locking)
+Best For	          Agile & DevOps	      Enterprise & legacy projects
+________________________________________
+
+
+
