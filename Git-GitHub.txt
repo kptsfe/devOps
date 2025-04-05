@@ -1,0 +1,36 @@
+1. set or view the Git username, you can use the following commands:
+
+✅ Set Git username (global)
+git config --global user.name "Your Name"
+
+✅ Set Git username (for a specific repo)
+git config user.name "Your Name"
+Use this inside the specific repository folder.
+
+🔍 Check current Git username
+git config user.name           # For current repo
+git config --global user.name # For global config
+
+2. If you're looking to set or view your email address in Git, here are the common commands:
+
+✅ Set Git Email Address
+1. Globally (for all repositories):
+git config --global user.email "your-email@example.com"
+
+2. Locally (for just the current repository):
+git config user.email "your-email@example.com"
+
+🔍 Check Current Git Email Address
+1. Globally:
+git config --global user.email
+
+2. Locally:
+git config user.email
+
+-----------------------------------
+
+install visual studio code.
+! tab tab or html5 - to auto create html page
+install extensions:
+Prettier - Code formatter, Live server, Auto Rename Tag
+goto settings - search - format on - select format on paste & format on save, default formatter (Prettier)
