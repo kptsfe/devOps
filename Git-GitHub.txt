@@ -1,3 +1,10 @@
+install visual studio code.
+! tab tab or html5 - to auto create html page
+install extensions:
+Prettier - Code formatter, Live server, Auto Rename Tag
+goto settings - search - format on - select format on paste & format on save, default formatter (Prettier)
+-----------------------------------------------------------
+
 1. set or view the Git username, you can use the following commands:
 
 ✅ Set Git username (global)
@@ -29,8 +36,4 @@ git config user.email
 
 -----------------------------------
 
-install visual studio code.
-! tab tab or html5 - to auto create html page
-install extensions:
-Prettier - Code formatter, Live server, Auto Rename Tag
-goto settings - search - format on - select format on paste & format on save, default formatter (Prettier)
+
