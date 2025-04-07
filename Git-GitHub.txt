@@ -44,3 +44,72 @@ https://www.youtube.com/watch?v=WzO6VynQ7UM
 Conventional Commits:
 https://www.conventionalcommits.org/en/v1.0.0/
 
+Here’s a handy list of commonly used Git commands, grouped by purpose:
+
+🔧 Basic Setup
+bash
+Copy
+Edit
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+📁 Repository Management
+bash
+Copy
+Edit
+git init                        # Initialize a new Git repo
+git clone <url>                # Clone a repo
+💾 Staging and Committing
+bash
+Copy
+Edit
+git status                     # Show status of changes
+git add <file>                 # Stage a file
+git add .                      # Stage all changes
+git commit -m "Message"        # Commit with a message
+git commit -am "Message"       # Add & commit tracked files
+🔄 Branching
+bash
+Copy
+Edit
+git branch                     # List branches
+git branch <name>              # Create new branch
+git checkout <name>            # Switch branch
+git checkout -b <name>         # Create & switch branch
+git merge <branch>             # Merge branch into current
+git branch -d <name>           # Delete branch
+⬆️⬇️ Remote Repositories
+bash
+Copy
+Edit
+git remote -v                  # List remotes
+git remote add origin <url>    # Add remote
+git push -u origin <branch>    # Push branch to remote
+git push                       # Push changes
+git pull                       # Pull latest changes
+git fetch                      # Download changes (no merge)
+🕒 History & Logs
+bash
+Copy
+Edit
+git log                        # View commit history
+git log --oneline              # One-line summary
+git show <commit>              # Show commit details
+🚨 Undo Changes
+bash
+Copy
+Edit
+git reset <file>               # Unstage a file
+git checkout -- <file>         # Discard file changes
+git reset --hard HEAD          # Reset all changes
+git revert <commit>            # Revert a commit
+📌 Stashing
+bash
+Copy
+Edit
+git stash                      # Save changes temporarily
+git stash pop                  # Reapply stashed changes
+Want cheat-sheet format, real-world examples, or advanced Git stuff like rebase, cherry-pick, or submodules?
+
+
+
+
