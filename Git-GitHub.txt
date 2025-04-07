@@ -1,3 +1,6 @@
+Git and GitHub Tutorial in Tamil | The Ultimate Guide to VC, Branching, Merging & Pull Request.
+https://www.youtube.com/watch?v=VIBWdLLq9kQ
+
 install visual studio code.
 ! tab tab or html5 - to auto create html page
 install extensions:
@@ -35,5 +38,9 @@ git config --global user.email
 git config user.email
 
 -----------------------------------
+Git & GitHub Complete Tutorial for Beginners | Simplest GitHub Full Course | Tamil
+https://www.youtube.com/watch?v=WzO6VynQ7UM
 
+Conventional Commits:
+https://www.conventionalcommits.org/en/v1.0.0/
 
