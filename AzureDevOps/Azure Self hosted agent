@@ -1,0 +1,101 @@
+Self-Hosted Agents in Azure DevOps: A Step-by-Step Deployment Guide
+https://www.youtube.com/watch?v=z98wFAGETpI
+
+Perfect — setting up a Self-hosted Azure DevOps Agent on Windows is a great workaround and gives you full control over builds. Here's a step-by-step guide to get you up and running:
+
+🖥️ Prerequisites
+A Windows machine or VM (can be your local PC or cloud VM)
+
+Internet access on that machine
+
+Admin privileges to install services
+
+.NET SDK, Git, etc., installed if needed for your builds
+
+🔧 Step-by-Step: Configure Self-hosted Windows Agent
+✅ 1. Go to Azure DevOps Agent Pools
+Sign in to https://dev.azure.com
+
+Go to your Azure DevOps project
+
+Click on Project Settings (bottom left)
+
+Under Pipelines, click Agent pools
+
+Click on Default (or create a new pool)
+
+Click New Agent (top right)
+
+✅ 2. Download the Agent
+On the "Get the agent" page:
+
+Select: Windows
+
+Download the ZIP file (e.g., agent-win-x64-3.229.1.zip)
+
+Extract it into a folder (e.g., C:\azagent)
+
+✅ 3. Open Command Prompt and Configure the Agent
+Open Command Prompt as Administrator
+
+Go to the folder where you extracted the agent:
+
+bash
+Copy
+Edit
+cd C:\azagent
+Run the configuration script:
+
+bash
+Copy
+Edit
+config.cmd
+Follow the prompts:
+
+Prompt	Example / What to Enter
+Server URL	https://dev.azure.com/yourorgname
+Authentication type	Press Enter (default is PAT)
+Personal Access Token (PAT)	Create one in Azure DevOps (see below)
+Agent pool	Default (or the one you selected)
+Agent name	(Any unique name, e.g., win-selfhosted)
+Work folder	Default is fine (_work)
+🔐 How to Create a PAT (Personal Access Token):
+In Azure DevOps → top right → click your user icon → Security
+
+Click New Token
+
+Set Scopes:
+
+Check: Agent Pools > Read & manage
+
+Copy and paste the token when prompted in the config step
+
+✅ 4. Install the Agent as a Service
+Once configuration is done:
+
+bash
+Copy
+Edit
+.\svc install
+.\svc start
+This runs the agent as a Windows service, so it starts automatically.
+
+🧪 5. Verify It's Working
+Go to Project Settings > Agent Pools > Default
+
+You should see your agent listed and online ✅
+
+Now your pipelines will automatically use this agent.
+
+🏗️ 6. Use It in Your YAML Pipeline
+In your .azure-pipelines.yml, reference your agent pool like this:
+
+yaml
+Copy
+Edit
+pool:
+  name: Default  # or whatever your pool name is
+You don’t need vmImage for self-hosted agents.
+
+🎉 Done!
+Now Azure DevOps will use your Windows machine to run builds — no need for Microsoft-hosted agents or parallelism grants.
