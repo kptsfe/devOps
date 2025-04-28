@@ -1,0 +1,80 @@
+1. Docker One-Page Cheat Sheet
+🔹 Basic
+bash
+Copy
+Edit
+docker version                  # Show Docker version
+docker info                     # Show Docker system info
+docker help                     # Show help for Docker
+🔹 Images
+bash
+Copy
+Edit
+docker images                   # List images
+docker pull <image>             # Pull image
+docker build -t <name> .        # Build image from Dockerfile
+docker rmi <image>              # Remove image
+docker tag <src> <target>       # Tag image
+docker save -o <file>.tar <img> # Save image to file
+docker load -i <file>.tar       # Load image from file
+🔹 Containers
+bash
+Copy
+Edit
+docker run <image>              # Run container
+docker run -d <image>           # Run container (background)
+docker run -it <image> bash     # Run interactive container
+docker ps                       # List running containers
+docker ps -a                    # List all containers
+docker stop <container>         # Stop container
+docker start <container>        # Start container
+docker restart <container>      # Restart container
+docker kill <container>         # Kill container
+docker rm <container>           # Remove container
+docker exec -it <container> bash# Exec into running container
+docker logs <container>         # View logs
+docker inspect <container>      # View container details
+docker cp <container>:/file ./  # Copy file from container
+🔹 Volumes
+bash
+Copy
+Edit
+docker volume create <name>     # Create volume
+docker volume ls                # List volumes
+docker volume inspect <name>    # Inspect volume
+docker volume rm <name>         # Remove volume
+🔹 Networks
+bash
+Copy
+Edit
+docker network ls               # List networks
+docker network create <name>    # Create network
+docker network inspect <name>   # Inspect network
+docker network connect <net> <cont># Connect container to network
+docker network disconnect <net> <cont># Disconnect container
+🔹 Docker Compose
+bash
+Copy
+Edit
+docker-compose up               # Start services
+docker-compose up -d            # Start services (background)
+docker-compose down             # Stop and remove services
+docker-compose build            # Build services
+docker-compose logs             # View service logs
+🔹 System Cleanup
+bash
+Copy
+Edit
+docker system df                # Show disk usage
+docker system prune             # Clean unused objects
+docker container prune          # Remove stopped containers
+docker image prune              # Remove unused images
+docker volume prune             # Remove unused volumes
+🎯 Quick Real Use
+bash
+Copy
+Edit
+docker run -d -p 8080:80 nginx
+docker exec -it mycontainer bash
+docker-compose up --build
+docker system prune -a
