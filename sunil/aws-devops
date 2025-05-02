@@ -395,6 +395,7 @@ cheat sheet
 
 ChatGPT said:
 Here’s a concise APT & APT-GET Cheat Sheet for Debian-based systems like Ubuntu:
+Link: https://github.com/kptsfe/devOps/blob/main/sunil/apt_cheat_sheet.pdf
 
 🛠️ APT & APT-GET Cheat Sheet
 🔄 Update & Upgrade
@@ -437,6 +438,7 @@ Use apt for interactive use (better UX).
 Use apt-get in scripts for consistency and backward compatibility.
 
 ================
+
 
 
 
