@@ -1,1 +1,292 @@
+Creating a new AWS Account
+Creating Linux Machine on AWS
+How to connect to Linux Machine?
+Using Putty Terminal
+
+Linux Commands:
+Create a file
+Remove a file
+Create a directory
+Delete a directory
+Go to previous directory
+How to create 4 directories ( d1 -- d2 --- d3 --- d4 )
+Rmdir fails  rm –r
+Long list
+What if file name starts .
+How to see hidden files
+How to create hidden directory
+Combination of options in ls command
+How to copy a file
+
+To see the list of files according to timestamp (  ls –lt )
+To know the current user
+Difference between $ and #
+How to switch from one user to another user ( su )
+Importance of “sudo”  “super user do”
+To get the current date ( date )
+To get the current month ( cal )
+Understanding file permissions
+Changing the file permissions ( chmod )
+Numerical and alphabetical notations
+
+Pipe command in linux
+What is apt repository?
+How to install the packages from apt repository
+Working with vi editor
+
+--
+aws.amazon.com
+EC2
+Linux -- Start
+
+--------------
+
+putty
+
+ppk
+
+ubuntu@ec2-13-127-21-85.ap-south-1.compute.amazonaws.com
+
+----------------------------
+
+two types of users
+--------------------------
+
+
+
+1) Normal User  --  $
+
+2) root user   --  #
+
+
+-----------------------
+
+
+ubuntu  -------------->  root
+
+
+    sudo   su  root
+
+sudo  --- superuser do
+
+su  ubuntu
+----------------------------------------------
+Three types of permissions
+
+
+read                   --  r
+write              ---   w
+execute        ---     x
+
+-----------------------
+Three type of users
+
+1) owner
+2) group
+3) others
+
+
+      _ _ _               _ _ _            _ _ _
+  
+
+   owner               group           others
+
+  
+  rw-                 rw-                    r   --      f6
+
+------------------------
+change the permissions
+
+1 ) Numerical notation
+2) Alphabetical notation
+
+
+Numerical notation
+-----------------------
+
+read
+write
+execute
+
+
+r   --------------  4
+w -------------   2
+x  -----------     1
+
+
+  rw-             rw-             r--                  --  f6
+
+ rwx            rw-               r--                       f6
+
+
+chmod  764              f6
+
+chmod 777     f6
+
+7 ----------  rwx
+6  --- rw
+5 --       r-x
+4 ------------  r
+3 --------- wx
+2 ------ w
+1 ----- x
+0  ---- No permissions
+
+
+chmod 700   f6
+
+
+
+2) Alphabetical notation
+
+
+owner  --------   u
+group      -------  g
+others   --------- o
+
+
++
+-
+  
+ rw-          rw-      r--                 --  f1
+
+rwx          rw-      r--                 --  f1
+
+chmod  u+x     f1
+
+chmod  u-x     f1
+
+-----------------------------
+
+
+
+   rw-      rw-       r--                        --  f20
+
+   rw-       r--        r-x           -- f20
+
+
+
+chmod  g-w,o+x     f20
+
+---
+
+
+
+++++++++++++++++
+
+The pipe command in Linux, represented by the vertical bar symbol '|'.
+The purpose of the pipe command is to connect the output of one command directly into the input of another
+
+The Pipe is a command in Linux that lets you use two or more commands,
+ such that output of one command serves as input to the next.
+
+ head -5 f10 | tail -1 
+
+  date | wc -l   
++++++++++++++++++++++++++
+
+
+++++++++++
+
+ d1
+  -------- d2
+                --------------d3
+                                     --------------------d4
+
+
+---------------------
+
+
+
+
+
+
+
+An APT repository is a collection of packages 
+APT repository allows you to perform package install, removal, upgrade operations on individual packages.
+
+tree d1 
+
+To install packages
+
+apt-get install packagename
+
+
+Step 1: Update apt  repository 
+Step 2: Install the package
+
+
+
+Syntax of Step 1:  Update apt repository
+sudo apt-get update
+
+Syntax of Step 2: Install the required package
+
+sudo apt-get install package_name
+sudo apt-get install tree
+
+
+
+
+
+
+
+
+
+To remove the package
+sudo apt-get remove tree
+
+-----------------------------------------
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Vi Editor
+-------------
+Basic editor in linux
+
+To create a file
+i  - to go to insert mode
+
+:wq  -- save and exit
+
+:q!  -- exit without saving
+
+Default mode - command mode
+
+
+Esc - to come out of insert mode  to command mode
+dd   - to delete a line
+
+yy  --  to copy the line
+p  - to paste  below
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+What is Git?
+-----------------------
+
+Git is  a Version controlling tool  /  SCM  tool.  ( Source code mgmt tool )
+
+
+Version control systems are tools that help a software team manage changes to source code over time.
+
+For almost all software projects, the source code is like the crown jewels - a precious asset whose value must be protected. 
+
+VCS are sometimes known as SCM (Source Code Management) tool.
+
+Most widely used modern version control system in the world today is Git. Git is a mature, actively maintained open source tool originally developed in 2005 by Linus Torvalds, the famous creator of the Linux operating system kernel. 
+
+Two types Version Controlloing
+1) Centrailized Version controlling 
+2) Distributed Version controlling
+
+Git is Distributed Version controlling.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
 
