@@ -438,7 +438,169 @@ Use apt for interactive use (better UX).
 Use apt-get in scripts for consistency and backward compatibility.
 
 ================
+Git:
 
+What is Git
+Types of Version Controlling	
+What is git bash?
+Configure Git
+Types of files
+Git init Observations
+How to move files to staging area
+How to know the status of the files
+How to move file to local repository
+How to see list of commits
+
+Quick revision ( Untracked files, staged files, commited files )
+Understanding the need for branching
+How to create new branch (git branch  branchname )
+How to see the list of branches ( git branch )
+Move the control to new branch (git checkout  branchname )
+To merge  branch with  master ( git merge branchname )
+Understanding .gitignore file
+
+Git Rebase ( git rebase master )
+Understanding difference between merge and rebase
+Re arrange the commit history
+How to merge the commits
+How to selectively pickup commits from child branch
+
+Git  Amend
+Handling file conflicts
+How to go back to previous version of code?
+Remote Repository ( Github )
+
+
+notes:
+day-6
+What is Git?
+-----------------------
+
+Git is  a Version controlling tool  /  SCM  tool.  ( Source code mgmt tool )
+
+
+Version control systems are tools that help a software team manage changes to source code over time.
+
+For almost all software projects, the source code is like the crown jewels - a precious asset whose value must be protected. 
+
+VCS are sometimes known as SCM (Source Code Management) tool.
+
+Most widely used modern version control system in the world today is Git. Git is a mature, actively maintained open source tool originally developed in 2005 by Linus Torvalds, the famous creator of the Linux operating system kernel. 
+
+Two types Version Controlloing
+1) Centrailized Version controlling 
+2) Distributed Version controlling
+
+Git is Distributed Version controlling.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+What is gitbash ?
+
+How to configure username and email for git
+
+$ git init
+
+$ git config --global   user.name "sunilkumark11"
+$ git config --global   user.email  "sunilkumark11@gmail.com"
+
+ TO check the configurations
+$ git config  --global  --list
+
+working directory ------> staging area -------> LR
+
+untracked files
+staged files
+commited files
+
++++++++++++++
+
+How to make working directory as git repository
+
+$ git init
+
+-Observation -
+
+++++++++++++++++
+===================
+
+day-7
+Branching
+--------------
+
+This feature is provided in git.
+Developer often work on multiple functionalities.
+
+It is recommended that developers should create code related to different functionalities  on seprate branches.
+Each branch will have the code related to specific functionality.
+This helps the development team in creating the code in an uncluttered way.
+Later this code can be merged with master branch.
+Default branch of git is "Master"
+
+
+Developer
+
+Home Page   --  f1  f2   f3
+Services   --  f4  f5
+Contact US  --  f6  f7   f8
+
+branch
+
+
+git  init  --  master
+
++++++++++++++++++++++++++++++++++
+
+
+git branch  branchname 
+
+git  branch test
+
+++++++++++++++
+
+day-8
+Git  rebase
+==============
+This is called as fastforward merge.
+The commits from the child branch are added to the top of the master branch.
+This is helpful when we want code from a branch to be reflected as the latest working version on master.
+
+
+Rearrange the commit order
+---------------------------
+git rebase  -i   HEAD~4
+
+
+Merge the commit's using "squash"
+--------------------------------
+git rebase -i HEAD~4
+Remove the pick word and replace it with squash
+
+------------------
+
+How to selectively pickup the commit's from child branch ( Cherry-pick )
+
+$ git  cherry-pick   a618fd1    1e82b9e     ( commit id's)
+
+
++++++++++++++++++++++
+day-9
++++++++++++++++++++++
+
+
+Git Amend
+----------------
+
+$ git commit  --amend  -m "a"
+
+
+How to go back to previous version of code
+----------------------------------------------
+git reset --hard c9187df
 
 
 
