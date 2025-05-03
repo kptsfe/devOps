@@ -456,6 +456,9 @@ Understanding the need for branching
 How to create new branch (git branch  branchname )
 How to see the list of branches ( git branch )
 Move the control to new branch (git checkout  branchname )
+git log --oneline
+git log --oneline --graph --all
+
 To merge  branch with  master ( git merge branchname )
 Understanding .gitignore file
 
