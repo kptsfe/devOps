@@ -1,0 +1,3491 @@
+	What is Docker?
+	Containerization vs virtualization
+	Advantages of Containerization
+	Installing Docker
+	Understanding Docker Terminologies
+◦	- Docker Images
+◦	- Docker Containers
+◦	- Docker Host
+◦	- Docker Client
+	Downloading the image and creating container
+	Stopping the container and removing the container
+	Understanding detached mode and interactive mode
+	Using environment variable
+	Creating multi-container architecture using –link
+	Implementing LAMP Architecture using Docker
+	Creating CI-CD Environment using Docker
+	Creating testing environment using Docker
+	Installing Docker compose
+	Examples of Docker Compose
+	Docker Volumes
+	Need for creating Docker Volumes
+	Types of Volumes
+◦	Simple Volumes
+◦	Docker Volume containers (Shareable volume)
+	Importance of Mount Path
+	Need for creating customized images
+◦	Using docker commit
+◦	Using docker file
+	Understanding Keywords of Docker file
+	Working with Docker file
+	Version controlling on Docker file
+	Cache Busting
+	Working with Registry
+◦	Public Registry
+◦	Private Registry
+Container Orchestration
+◦		Load Balancing
+◦	     Scaling of containers
+◦	     Performing rolling Updates
+◦	     Handling failover Scenarios
+Remove node from docker swarm
+	Understading Docker Networking
+	Drawback to Docker0 Network
+	Creating our custom network
+	Need for creating custom network
+	Creating container in custom network
+Notes
+
+
+
+
+
+
+Docker is a containerization tool.
+
+Virtualization -- Fixed hardware allocation.
+
+Containerization - No Fixed Hardware
+
+Process isolation ( Dependency in os is removed )
+
++++++++++++++++++++++++++
+
+In comparison to the traditional virtualization functionalities of hypervisors, 
+Docker containers eliminate the need for a separate guest operating system for every new virtual machine.
+
+Docker implements a high-level API to provide lightweight containers that run processes in isolation. 
+
+A Docker container enables rapid deployment with minimum run-time requirements. It also ensures better management and simplified portability.
+ This helps developers and operations team in rapid deployment of an application.
+
++++++++++++++++++++++++++
+Create Ubuntu Machine on AWS
+All Traffic - anywhere
+
+Connect using git bash
+
+https://get.docker.com/
+
+
+Go to Root Account
+$ sudo  su -
+# curl -fsSL https://get.docker.com -o get-docker.sh ( this will download shell script in the machine)
+
+# sh get-docker.sh  ( This will execute the shell script, which will install docker )
+
+
+How to check the docker is installed or not
+
+# docker --version
+
+
+
+We should be comformatable with four terms
+1) Docker Images   
+Combinations of binaries / libraries which are necessary for one software application.
+
+2) Docker Containers  
+When we run the Image, We get container.
+
+
+
+3) Docker Host
+Machine on which docker is installed, is called as Docker host.
+
+
+
+4) Docker Client
+Terminal used to run docker run commands ( Git bash )
+
+
+On linux machine, git bash will work like docker client.
+
+
++++++++++++
+Docker Commands
+--------------------
+Working on Images
+-------------------------
+1 To download a docker image 
+   docker pull image_name 
+
+
+
+
+2 To see the list of docker images 
+  docker image ls 
+  (or) 
+  docker images 
+
+3 To delete a docker image from docker host 
+  docker rmi image_name/image_id 
+
+
+
+
+4) To upload a docker image into docker hub 
+   docker push image_name 
+
+5) To tag an image 
+docker tag   image_name   ipaddress_of_local_registry:5000/image_name 
+
+
+
+6) To build an image from a customised container 
+  docker   commit  container_name/container_id     new_image_name 
+
+
+
+
+7) To create an image from docker file 
+   docker build -t    new_image_name 
+
+
+
+8) To search for a docker image 
+   docker search image_name 
+
+
+
+9)  To delete all images that are not attached to containers 
+   docker system prune -a 
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+Working on containers
+-----------------------------
+
+10) To see the list of all running continers 
+   docker  container  ls 
+
+
+
+11) To see the list of running and stopped containers 
+    docker   ps -a 
+
+
+
+12) To start a container 
+    docker  start  container_name/container_id 
+
+
+
+
+13) To stop a running container 
+    docker stop   container_name/container_id 
+
+
+
+14) To restart a running container 
+   docker restart container_name/container_id 
+         To restart after 10 seconds 
+   docker restart  -t  10  container_name/container_id 
+
+
+
+
+
+15) To delete a stopped container 
+    docker  rm  container_name/container_id
+
+
+
+
+16) To delete a running container 
+    docker  rm  -f  container_name/container id 
+
+
+
+
+
+
+17) To stop all running containers 
+    docker stop $(docker ps -aq) 
+
+
+
+18) To restart all containers 
+    docker restart $(docker ps -aq) 
+
+19) To remove all stopped containers 
+    docker rm $(docker ps -aq) 
+
+
+20) To remove all contianers(running and stopped) 
+    docker rm -f  $(docker ps -aq) 
+
+21) To see the logs generated by a container 
+   docker logs container_name/container_id 
+
+22) To see the ports used by a container 
+   docker port container_name/container_id 
+
+23) To get detailed info about a container 
+   docker inspect container_name/container_id 
+
+24) To go into the shell of a running contianer which is moved into background 
+   docker attach container_name/container id 
+
+25) To execute anycommand in a container 
+   docker exec -it container_name/container_id command
+   Eg: To launch the bash shell in a contianer 
+   docker exec -it container_name/container_id    bash 
+
+
+26) To create a container from a docker image  ( imp )
+     docker run image_name   
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+Run command options 
+
+-it 	for opening an interactive terminal in a container 
+
+
+--name 	Used for giving a name to a container 
+
+-d 	Used for running the container in detached mode as a background process 
+
+-e 	Used for passing environment varaibles to the container 
+
+
+
+-p 	Used for port mapping between port of container with the dockerhost port.
+
+ 
+-P 	Used for automatic port mapping ie, it will map the internal port of the container 
+                with some port on host machine. 
+               This host port will be some number greater than 30000 
+
+-v 	Used for attaching a volume to the container 
+
+--volume-from 	 Used for sharing volume between containers 
+
+--network 	Used to run the contianer on a specific network 
+
+--link 		Used for linking the container for creating a multi container architecture 
+
+--memory  	Used to specify the maximum amount of ram that the container can use 
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++=
+
+
+# docker images   ( There are no images )
+
+
+
+
+
+To download tomcat image
+
+# docker pull tomee
+
+
+# docker images		
+
+# docker pull ubuntu
+
+If you do not specify the version, by default, we get latest version
+
+I want to download jenkins
+# docker pull jenkins/jenkins
+
+
++++++++++++
+Docker Commands
+--------------------
+Working on Images
+-------------------------
+1 To download a docker image 
+   docker pull image_name 
+
+
+
+2 To see the list of docker images 
+  docker image ls 
+  (or) 
+  docker images 
+
+3 To delete a docker image from docker host 
+  docker rmi image_name/image_id 
+
+4) To upload a docker image into docker hub 
+   docker push image_name 
+
+5) To tag an image 
+docker tag   image_name   ipaddress_of_local_registry:5000/image_name 
+
+6) To build an image from a customised container 
+  docker   commit  container_name/container_id     new_image_name 
+
+7) To create an image from docker file 
+   docker build -t    new_image_name 
+
+8) To search for a docker image 
+   docker search image_name 
+
+9)  To delete all images that are not attached to containers 
+   docker system prune -a 
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+Working on containers
+-----------------------------
+
+10) To see the list of all running continers 
+   docker  container  ls 
+
+
+
+11) To see the list of running and stopped containers 
+    docker   ps -a 
+
+
+
+12) To start a container 
+    docker  start  container_name/container_id 
+
+
+
+
+13) To stop a running container 
+    docker stop   container_name/container_id 
+
+14) To restart a running container 
+   docker restart container_name/container_id 
+         To restart after 10 seconds 
+   docker restart  -t  10  container_name/container_id 
+
+
+
+
+
+15) To delete a stopped container 
+    docker  rm  container_name/container_id
+
+
+
+
+16) To delete a running container 
+    docker  rm  -f  container_name/container id 
+
+
+
+
+
+
+17) To stop all running containers 
+    docker stop $(docker ps -aq) 
+
+
+
+18) To restart all containers 
+    docker restart $(docker ps -aq) 
+
+19) To remove all stopped containers 
+    docker rm $(docker ps -aq) 
+
+
+20) To remove all contianers(running and stopped) 
+    docker rm -f  $(docker ps -aq) 
+
+21) To see the logs generated by a container 
+   docker logs container_name/container_id 
+
+22) To see the ports used by a container 
+   docker port container_name/container_id 
+
+23) To get detailed info about a container 
+   docker inspect container_name/container_id 
+
+24) To go into the shell of a running contianer which is moved into background 
+   docker attach container_name/container id 
+
+25) To execute anycommand in a container 
+   docker exec -it container_name/container_id command
+   Eg: To launch the bash shell in a contianer 
+   docker exec -it container_name/container_id    bash 
+
+
+26) To create a container from a docker image  ( imp )
+     docker run image_name   
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+Run command options 
+
+-it 	for opening an interactive terminal in a container 
+
+
+--name 	Used for giving a name to a container 
+
+-d 	Used for running the container in detached mode as a background process 
+
+-e 	Used for passing environment varaibles to the container 
+
+
+
+-p 	Used for port mapping between port of container with the dockerhost port.
+
+ 
+-P 	Used for automatic port mapping ie, it will map the internal port of the container 
+                with some port on host machine. 
+               This host port will be some number greater than 30000 
+
+-v 	Used for attaching a volume to the container 
+
+--volume-from 	 Used for sharing volume between containers 
+
+--network 	Used to run the contianer on a specific network 
+--link 		Used for linking the container for creating a multi container architecture 
+
+--memory  	Used to specify the maximum amount of ram that the container can use 
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++=
+
+
+# docker images   ( There are no images )
+
+
+
+
+
+To download tomcat image
+
+# docker pull tomee
+
+
+# docker images		
+
+# docker pull ubuntu
+
+If you do not specify the version, by default, we get latest version
+
+I want to download jenkins
+# docker pull jenkins/jenkins
+
+
+
+TO create a container from an image
+
+
+#  docker run       --name c1      -p        7070:8080              tomee
+
+
+
+
+
+TO check the tomcat is running or not
+http://35.154.212.55:7070
+
+( 7070 is port number mapped in docker host)
+
+Lets remove the container  ( Open another gitbash terminal)
+
+# docker stop  c1
+
+
+# docker rm -f c1
+
+# docker run --name   mytomcat  -p 7070:8080     -d      tomee
+
+
+
+
+
+
+
+( The above command  runs tomcat in detached mode , so we get out # prompt back )
+ 
+# docker container ls
+
+TO start jenkins
+#  docker run --name myjenkins  -p 9090:8080    -d   jenkins/jenkins
+
+
+
+
+To check for jenkins ( Open browser )
+ http://13.126.59.69:9090
+
+To create ubuntu container
+#  docker run --name myubuntu  -it    ubuntu
+
+
+
+
+
+Observation:  You have automatically entered into ubuntu
+# ls  ( To see the list of files in ubuntu )
+# exit  ( To comeout of container back to host )
+
+
++++++++++++++
+
+
+Scenario 1:
+Start tomcat as a container and name it as "webserver". Perform port mapping and run this container in detached mode
+
+# docker run --name  webserver  -p 7070:8080  -d tomee
+
+To access homepage of the tomcat container
+Launch any browser
+public_ip_of_dockerhost:7070
+
+++++++++++++++++++++++++++++++++
+
+
+
+
+
+Scenario 2:
+Start jenkins as a container in detached mode , name is as "devserver", perform port mapping
+
+# docker run -d  --name  devserver  -p 9090:8080 jenkins
+
+To access home page of jenkins ( In browser)
+public_ip_of_dockerhost:9090
+
+++++++++++++++++++++++++++++++++++++++++
+
+Scenario 3:  Start nginx as a container and name as "appserver", run this in detached mode ,   perform automatic port mapping 
+
+Generally we pull the image and run the image
+
+Instead of pulling, i directly   
+
+# docker run --name  appserver  -P  -d  nginx 
+
+
+
+( if image is not available, it perform pull operation automatically )
+( Capital P  , will perform automatic port mapping )
+
+
+
+How to check nginx is running or not? ( we do not know the port number)
+
+To know the port that is reserved for nginx )
+# docker port  appserver
+80/tcp -> 0.0.0.0:32768
+
+80  is nginx port
+32768  is  dockerhost port
+
+or
+
+#  docker container ls    ( to see the port of nginz and docker host )
+
+To check nginx on browser
+13.126.59.69:49153
+
+
+
+++++++++++++++++++++++++++
+To start centos as container
+
+# docker run --name mycentos  -it  centos
+#  exit  ( To come back to dockerhost )
+
+++++++++++++++
+
+
+
+++++++++++++++
+
+To start mysql  as container, open interactive terminal in it, create a sample table.
+
+
+  # docker run  --name  mydb  -d     -e   MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+
+
+
+
+# docker container ls
+
+I want to open bash terminal of  mysql
+# docker  exec   -it  mydb  bash
+
+To connect to mysql database
+#  mysql  -u  root  -p 
+
+enter the password, we get mysql  prompt
+
+TO see list of databases
+> show databases;
+
+TO switch to a databse
+> use db_name
+> use mysql
+
+TO create emp tables and dept tables
+
+https://justinsomnia.org/2009/04/the-emp-and-dept-tables-for-mysql/
+
+
+> exit
+# exit
+
+------------------------------
+
+
+
+++++++++++++++++++
+Multi container architecture using docker
+------------------------------------------
+This can be done in  2  ways
+1) --link
+2) docker-compose
+
+
+1)  --link option
+----------------------
+
+
+Use case:
+--------------
+Start two busybox containers and create link between them
+
+
+
+
+
+Create 1st busy box container
+  # docker run --name c10 -it   busybox
+
+/ # 
+
+
+
+
+
+
+
+
+
+How to come out of the container without exit
+( ctrl + p  + q)
+
+
+
+
+
+
+
+
+
+Create 2nd busy box container  and establish link to c1 container
+# docker run   --name  c20     --link c10:c10-alias        -it     busybox   ( c10-alias  is  alias name)
+
+/ #
+
+
+
+
+
+
+
+
+
+How to check  link is established for not?
+
+/ #  ping c10
+
+Ctrl +c  ( to come out from ping )
+
+( ctrl + p  + q)
++++++++++++++++++++++++++++++++++
+
+
+Ex 2:  Creating development environment using docker
+
+Start mysql as container and link it with wordpress container.
+
+
+Developer should be able to create wordpress website
+
+
+
+
+
+1) TO start mysql as container
+
+
+# docker run --name mydb  -d  -e  MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+
+( if container is already in use  , remove  it
+# docker rm -f  mydb           )
+
+Check whether the container is running or not
+# docker container ls
+
+
+
+
+
+
+2) TO start wordpress container
+# docker run  --name mysite  -d  -p 5050:80 --link mydb:mysql  wordpress
+
+
+13.232.183.233:5050
+
+
+
+
+
+
+
+
+Check wordpress installed or not
+Open browser 
+public_ip:5050
+18.138.58.3:5050
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+Ex 3:  Create LAMP  Architecture using docker
+
+
+
+
+
+
+
+
+L -- linux
+A -- apache tomcat
+M -- mysql
+P --  php
+
+( Linux os we already have )
+
+
+
+
+Lets remove all the docker containers
+# docker rm  -f  $(docker ps -aq)
+
+# docker container ls  (  we have no containers now )
+
+1)  TO start mysql as container
+# docker run --name mydb  -d  -e  MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+2)  TO start tomcat as container
+# docker run  --name  apache  -d  -p 6060:8080  --link mydb:mysql  tomee
+
+
+
+
+TO see the list of containers
+# docker container ls
+
+To check if tomcat is linked with mysql
+# docker inspect apache      ( apache is the name of the container )
+
+
+3)  TO start php as container
+# docker  run --name php  -d --link apache:tomcat  --link mydb:mysql    php
+
+
+++++++++++++++++++++
+Ex 4:
+Create CI-CD environment, where jenkins container is linked with two tomcat containers.
+
+
+Lets delete all the container
+# docker rm  -f  $(docker ps -aq)
+
+To start jenkins as a container
+# docker run  --name  devserver  -d -p 7070:8080 jenkins/jenkins
+
+
+to check jenkins is running or not?
+Open browser
+public_ip:7070
+http://18.138.58.3:7070
+
+We need two tomcat containers  ( qa server and prod server )
+# docker run --name  qaserver  -d  -p 8080:8080 --link devserver:jenkins tomee
+
+
+to check the tomcat   use public_ip but port number will be 8080
+http://18.138.58.3:8080
+
+
+
+
+
+
+# docker run --name  prodserver  -d  -p 9090:8080 --link devserver:jenkins tomee
+to check the tomcat of prodserver
+http://18.138.58.3:9090
+
++++++++++++++++++++++++++++++
+
++++++++++++++++++++++++++++++
+
+Creating testing environment using docker
+
+
+
+Create selenium hub container, and link it with two node containers.
+One node with firefox installed, another node with chrome installed.
+
+Tester should be able to run selenuim automation programs for testing the application on multiple browsers.
+
+
+To delete all the running containers
+# docker rm  -f  $(docker ps -aq)
+
+		
+In Browser  --  open - hub.docker.com
+
+Search for selenium
+We have a image -  selenium/hub
+
+To start selenium/hub as container
+# docker run --name  hub  -d -p 4444:4444   selenium/hub
+
+
+In hub.docker.com
+we also have-  selenium/node-chrome-debug    ( It is ubuntu container with chrome)
+
+To start it as a container and link to hub ( previous container)
+# docker run --name chrome  -d -p 5901:5900  --link hub:selenium   selenium/node-chrome-debug
+
+In hub.docker.com
+we also have-  selenium/node-firefox-debug
+
+To start it as a container and link to hub ( It is ubuntu container with firefox)
+# docker run --name firefox  -d -p 5902:5900  --link hub:selenium   selenium/node-firefox-debug
+
+To see the list of container
+# docker container ls
+
+Note: firefox and chrome containers are GUI containers.
+To see the GUI interface to chrome / firefox container
+-------------------------------------------------
+Download and install vnc viewer
+In VNC viewer search bar
+public_ip_dockerhost:5901
+
+3.108.228.148:5901
+Password - secret
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+All the commands we learnt till date are adhoc commands.
+
+In the previous usecase we have installed two containers ( chrome and firefox)
+Lets say you need 8 containers?
+Do we need to run 8 commands?
+ 
+Instead of 80 commands, we can use docker compose
+
+++++++++++++++++++++++++
+
+
+Docker compose
+This is a feature of docker using which we can create multicontainer architecture using yaml files. This yaml file contains information about the  containers that we want to launch and how they have to be linked with each other.Yaml is a file format. It is not a scripting language.
+Yaml will store the data in key value pairs
+Lefthand side - Key
+Righthand side - Value
+Yaml file is space indented.
+
+
+
+
+Sample Yaml file
+
+---
+logiclabs:
+ trainers:
+  sunil: Devops
+  raj: Python
+ Coordinators:
+  lakshmi: Devops
+  rani: AWS
+...
+
+
+
+
+
+++++++++++++++++++++++
+logiclabs -- root  element
++++++++++++++++++++++++++
+
+To validate the abvove Yaml file
+Open  http://www.yamllint.com/
+Paste the above code  -- Go button
+
+++++++++++++++++++++++++++
+
+Installing Docker compose
+-----------------------
+1) Open https://docs.docker.com/compose/install/
+2) Go to linux section
+   Copy and pase the below two commands
+
+#    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# sudo chmod +x /usr/local/bin/docker-compose
+	
+How to check docker compose is installed or not?
+
+# docker-compose  --version
+
++++++++++++++++++++++++++
+
+
+
+++++++++++++++
+
+To start mysql  as container, open interactive terminal in it, create a sample table.
+
+
+  # docker run  --name  mydb  -d     -e   MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+
+
+
+
+# docker container ls
+
+I want to open bash terminal of  mysql
+# docker  exec   -it  mydb  bash
+
+To connect to mysql database
+#  mysql  -u  root  -p 
+
+enter the password, we get mysql  prompt
+
+TO see list of databases
+> show databases;
+
+TO switch to a databse
+> use db_name
+> use mysql
+
+TO create emp tables and dept tables
+
+https://justinsomnia.org/2009/04/the-emp-and-dept-tables-for-mysql/
+
+
+> exit
+# exit
+
+------------------------------
+
+
+
+++++++++++++++++++
+Multi container architecture using docker
+------------------------------------------
+This can be done in  2  ways
+1) --link
+2) docker-compose
+
+
+1)  --link option
+----------------------
+
+
+Use case:
+--------------
+Start two busybox containers and create link between them
+
+
+
+
+
+Create 1st busy box container
+  # docker run --name c100 -it   busybox
+
+/ # 
+
+
+
+
+
+
+How to come out of the container without exit
+( ctrl + p  + q)
+
+
+
+
+
+
+Create 2nd busy box container  and establish link to c1 container
+# docker run   --name  c200     --link c100:c100-alias        -it     busybox   ( c100-alias  is  alias name)
+
+/ #
+
+
+
+
+
+
+
+
+
+
+
+
+How to check  link is established for not?
+
+/ #  ping c10
+
+Ctrl +c  ( to come out from ping )
+
+( ctrl + p  + q)
++++++++++++++++++++++++++++++++++
+
+
+Ex 2:  Creating development environment using docker
+
+Start mysql as container and link it with wordpress container.
+
+
+Developer should be able to create wordpress website
+
+
+
+
+
+1) TO start mysql as container
+
+
+# docker run --name mydb  -d  -e  MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+
+( if container is already in use  , remove  it
+# docker rm -f  mydb           )
+
+Check whether the container is running or not
+# docker container ls
+
+
+
+
+
+
+2) TO start wordpress container
+# docker run  --name mysite  -d  -p 5050:80 --link mydb:mysql  wordpress
+
+
+13.232.183.233:5050
+
+
+
+
+
+
+
+
+Check wordpress installed or not
+Open browser 
+public_ip:5050
+18.138.58.3:5050
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+Ex 3:  Create LAMP  Architecture using docker
+
+
+
+
+
+
+
+
+L -- linux
+A -- apache tomcat
+M -- mysql
+P --  php
+
+( Linux os we already have )
+
+
+
+
+Lets remove all the docker containers
+# docker rm  -f  $(docker ps -aq)
+
+# docker container ls  (  we have no containers now )
+
+1)  TO start mysql as container
+# docker run --name mydb  -d  -e  MYSQL_ROOT_PASSWORD=sunil  mysql:8
+
+
+2)  TO start tomcat as container
+# docker run  --name  apache  -d  -p 6060:8080  --link mydb:mysql  tomee
+
+
+
+
+TO see the list of containers
+# docker container ls
+
+To check if tomcat is linked with mysql
+# docker inspect apache      ( apache is the name of the container )
+
+
+3)  TO start php as container
+# docker  run --name php  -d --link apache:tomcat  --link mydb:mysql    php
+
+
+++++++++++++++++++++
+Ex 4:
+Create CI-CD environment, where jenkins container is linked with two tomcat containers.
+
+
+Lets delete all the container
+# docker rm  -f  $(docker ps -aq)
+
+To start jenkins as a container
+# docker run  --name  devserver  -d -p 7070:8080 jenkins/jenkins
+
+
+to check jenkins is running or not?
+Open browser
+public_ip:7070
+http://18.138.58.3:7070
+
+We need two tomcat containers  ( qa server and prod server )
+# docker run --name  qaserver  -d  -p 8080:8080 --link devserver:jenkins tomee
+
+
+to check the tomcat   use public_ip but port number will be 8080
+http://18.138.58.3:8080
+
+
+
+
+
+
+# docker run --name  prodserver  -d  -p 9090:8080 --link devserver:jenkins tomee
+to check the tomcat of prodserver
+http://18.138.58.3:9090
+
++++++++++++++++++++++++++++++
+
++++++++++++++++++++++++++++++
+
+Creating testing environment using docker
+
+
+
+Create selenium hub container, and link it with two node containers.
+One node with firefox installed, another node with chrome installed.
+
+Tester should be able to run selenuim automation programs for testing the application on multiple browsers.
+
+
+To delete all the running containers
+# docker rm  -f  $(docker ps -aq)
+
+		
+In Browser  --  open - hub.docker.com
+
+Search for selenium
+We have a image -  selenium/hub
+
+To start selenium/hub as container
+# docker run --name  hub  -d -p 4444:4444   selenium/hub
+
+
+In hub.docker.com
+we also have-  selenium/node-chrome-debug    ( It is ubuntu container with chrome)
+
+To start it as a container and link to hub ( previous container)
+# docker run --name chrome  -d -p 5901:5900  --link hub:selenium   selenium/node-chrome-debug
+
+In hub.docker.com
+we also have-  selenium/node-firefox-debug
+
+To start it as a container and link to hub ( It is ubuntu container with firefox)
+# docker run --name firefox  -d -p 5902:5900  --link hub:selenium   selenium/node-firefox-debug
+
+To see the list of container
+# docker container ls
+
+Note: firefox and chrome containers are GUI containers.
+To see the GUI interface to chrome / firefox container
+-------------------------------------------------
+Download and install vnc viewer
+In VNC viewer search bar
+public_ip_dockerhost:5901
+
+3.108.228.148:5901
+Password - secret
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+All the commands we learnt till date are adhoc commands.
+
+In the previous usecase we have installed two containers ( chrome and firefox)
+Lets say you need 8 containers?
+Do we need to run 8 commands?
+ 
+Instead of 80 commands, we can use docker compose
+
+++++++++++++++++++++++++
+
+
+Docker compose
+This is a feature of docker using which we can create multicontainer architecture using yaml files. This yaml file contains information about the  containers that we want to launch and how they have to be linked with each other.Yaml is a file format. It is not a scripting language.
+Yaml will store the data in key value pairs
+Lefthand side - Key
+Righthand side - Value
+Yaml file is space indented.
+
+
+
+
+Sample Yaml file
+
+---
+logiclabs:
+ trainers:
+  sunil: Devops
+  raj: Python
+ Coordinators:
+  lakshmi: Devops
+  rani: AWS
+...
+
+
+
+
+
+++++++++++++++++++++++
+logiclabs -- root  element
++++++++++++++++++++++++++
+
+To validate the abvove Yaml file
+Open  http://www.yamllint.com/
+Paste the above code  -- Go button
+
+++++++++++++++++++++++++++
+
+Installing Docker compose
+-----------------------
+1) Open https://docs.docker.com/compose/install/
+2) Go to linux section
+   Copy and pase the below two commands
+
+#    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# sudo chmod +x /usr/local/bin/docker-compose
+	
+How to check docker compose is installed or not?
+
+# docker-compose  --version
+
++++++++++++++++++++++++++
+
+
+++++++++++++++++++++++++
+
+
+Docker compose
+This is a feature of docker using which we can create multicontainer architecture using yaml files. 
+This yaml file contains information about the  containers that we want to launch and how they have to be linked with each other.
+
+Yaml is a file format. It is not a scripting language.
+
+Yaml will store the data in key value pairs
+Lefthand side - Key
+Righthand side - Value
+Yaml file is space indented.
+
+
+
+
+Sample Yaml file
+
+---
+logiclabs:
+ trainers:
+  sunil: Devops
+  raj: Python
+ Coordinators:
+  lakshmi: Devops
+  rani: AWS
+...
+
+
+
+
+
+++++++++++++++++++++++
+logiclabs -- root  element
++++++++++++++++++++++++++
+
+To validate the abvove Yaml file
+Open  http://www.yamllint.com/
+Paste the above code  -- Go button
+
+++++++++++++++++++++++++++
+
+Installing Docker compose
+-----------------------
+1) Open https://docs.docker.com/compose/install/
+2) Go to linux section
+   Copy and pase the below two commands
+
+#    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# sudo chmod +x /usr/local/bin/docker-compose
+	
+How to check docker compose is installed or not?
+
+# docker-compose  --version
+
++++++++++++++++++++++++++
+
+
+ 
+Examples of Docker Compose:
+
+
+Create a docker compose file for setting up dev environment.
+mysql container is linked with wordpress container.
+
+
+
+
+# vi docker-compose.yml      ( Name of the file should be docker-compose.yml)
+
+---
+version: '3'
+
+services:
+ mydb:
+  image: mysql:8
+  environment:
+   MYSQL_ROOT_PASSWORD: sunilsunil
+
+ mysite:
+  image: wordpress
+  ports:
+   - 5050:80
+  links:
+   - mydb:mysql
+...
+
+:wq
+
+Lets remove all the running container
+# docker rm -f $(docker ps -aq)
+
+How to start the above services from yml file
+# docker-compose  up
+
+We got lot of logs coming on the screen. to avoid it we use -d  option  
+
+# docker-compose stop
+
+Remove the container
+# docker rm -f $(docker ps -aq)
+ 
+# docker-compose up  -d
+
+To check wordpress
+public_ip:5050
+
+++++++++++++++++++++++++++++
+To stop both the containers
+# docker-compose   stop
+
+++++++++++++++++++++++++++++++
+
+
+
+
+
+
+++++++++++++++++++++
+
+Lets remove all the running container
+# docker rm -f $(docker ps -aq)
+
+
+
+
+To stop the containers
+# docker-compose stop
+
+
+We got lot of logs coming on the screen. to avoid it we use -d  option  
+
+
+
+Create a docker compose file for setting up LAMP architecture 
+
+
+
+# vi docker-compose.yml
+
+---
+version: '3'
+
+services:
+ mydb:
+  image: mysql:8
+  environment:
+   MYSQL_ROOT_PASSWORD: sunilsunil
+
+ apache:
+  image: tomee
+  ports:
+   - 6060:8080
+  links:
+   - mydb:mysql
+
+
+ php:
+  image: php
+  links:
+   - mydb:mysql
+   - apache:tomcat
+...
+
+
+:wq
+
+# docker-compose up -d
+
+To see the list of the containers
+# docker container ls
+( Observation - we are unable to see the php container)
+
+# docker ps -a
+
+++++++++++++++++++++++++++++++++++++
+Ex: Docker-compose file for setting up CI-CD Environment.
+jenkins container is linked with two tomcat containers 
+
+
+# vim docker-compose.yml
+
+---
+version: '3'
+services:
+ devserver:
+  image: jenkins/jenkins
+  ports:
+   - 7070:8080
+
+ qaserver:
+  image: tomee
+  ports:
+   - 8899:8080
+  links:
+   - devserver:jenkins
+
+
+ prodserver:
+  image: tomee
+  ports:
+   - 9090:8080
+  links:
+   - devserver:jenkins
+...
+
+
+:wq
+
+# docker rm -f $(docker ps -aq)
+# docker-compose up -d
+
+# docker container ls
+
+To check
+public_ip:7070  ( To check jenkins )
+public_ip:8899 ( Tomcat  qa server )
+public_ip:9090 ( Tomcat  prod server )
+
+13.126.58.183:7070
+13.126.58.183:8899
+13.126.58.183:9090
++++++++++++++++++++++
+
+
+
+
+Docker-compose file to set up testing environment.
+selenium  hub container is linked with two node containers.
+
+
+
+# vim docker-compose.yml
+
+---
+version: '3'
+services:
+ hub:
+  image: selenium/hub
+  ports:
+   - 4444:4444
+
+ chrome:
+  image: selenium/node-chrome-debug
+  ports:
+   - 5901:5900
+  links:
+   - hub:selenium
+
+ firefox:
+  image: selenium/node-firefox-debug
+  ports:
+   - 5902:5900
+  links:
+   - hub:selenium
+...
+
+:wq
+
+Lets delete all the running containers
+
+# docker rm -f $(docker ps -aq)
+# docker-compose up -d
+
+# docker container ls
+
+As it is GUI container, 
+we can access using VNC viewer
+
+Open VNC viewer
+13.126.73.231:5901
+password: secret
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Docker volumes
+------------------
+Docker containers are  ephemeral ( temporary )
+Where as the data processed by the container should be permanent.
+
+Generally, when a container is deleted all its data will be lost.
+To preserve the data, even after deleting the container, we use volumes.
+
+Volumes are of two types
+1) Simple docker volumes
+2) Docker volume containers ( Sharable volume )
+
+
+
+
+Simple docker volumes
+-----------------------------
+These volumes are used only when we want to access the data, 
+even after the container is deleted. 
+But this data cannot be shared with other containers.
+
+
+
+usecase
+------------
+1) Create a directory called /data ,  
+start centos as container and mount /data as volume. 
+Create files in mounted volume in centos container,
+exit from the container and delete the container. Check if the files are still available.
+
+
+
+
+Lets create a folder  with the name  
+# mkdir  /data
+
+# docker run --name c1 -it  -v /data centos  ( v option is used to attach volume)
+
+
+
+
+
+# ls  ( Now, we can see the data folder also in the container)
+
+# cd data
+# touch file1   file2 
+# ls
+# exit  ( To come out of the container )
+# docker inspect c1
+
+We can see under mounts "data" folder it located in the host machine.
+Copy the path
+
+
+
+/var/lib/docker/volumes/7f2d77890c5342ba3ed7fdc2c87c3ad1a0c3e6ca473120f47df799d375075237/_data
+
+
+
+Now, lets delete te container
+# docker rm -f c1
+
+After deleting the container, lets go to the location of the data folder
+
+# cd  /var/lib/docker/volumes/5002ff146b76e460a07f315badf350416fb2b9c4b458a4435a8762eab1d27015/_data
+
+
+# ls  ( we can see file1  file2 )
+
+( Observe , the container is deleted but still  the data is persistant )
+
+
+
+
++++++++++++++
+
+docker volume containers
+-------------------------------
+These are also known as reusable volume.
+The volume used by one container can be shared with other containers.
+Even if all the containers are deleted, data will still be available on the docker host.
+
+Ex:
+
+# sudo su -
+
+Lets create a directory      /data
+# mkdir  /data 
+
+Lets Start  centos as container 
+#  docker run --name  c1  -it  -v /data centos 
+
+# ls  ( we can see the list of files and dir in centos )
+
+
+# cd data
+# ls  ( currently we have no files )
+
+Lets create  some files
+# touch file1  file2  ( These two files are available in c1 container)
+
+Comeout of the container without exit
+# Ctrl+ p +q  ( container will still runs in background )
+
+
+Lets Start another  centos as container ( c2 container should use the same volume as c1)
+#  docker run --name  c2  -it  --volumes-from c1  centos 
+
+
+
+# cd data
+# ls  ( we can see the files created by c1 )
+
+Lets create some more files
+# touch file3  file4
+# ls  ( we see 4 files )
+
+Comeout of the container without exit
+# Ctrl +p  Ctrl +q  ( container will still runs in background )
+
+Lets Start another  centos as container
+#  docker run --name  c3  -it  --volumes-from c2 centos 
+
+
+
+# cd data
+# ls  ( we can see 4 files )
+# touch file5  file6
+# ls
+
+Comeout of the container without exit
+# Ctrl +p  +q  ( container will still runs in background )
+
+Now, lets connect to any container which is running in the background
+# docker attach  c1
+#  ls  ( you can see all the files )
+# exit
+
+Identify the mount location
+$ docker inspect  c1
+( search for the mount section )
+
+Take a note of the source path
+
+/var/lib/docker/volumes/e22a9b39372615727b964151b6c8108d6c02b13114a3fcce255df0cee7609e15/_data
+
+
+
+Lets remove all the container
+# docker rm -f  c1  c2  c3
+
+Lets go to the source path
+
+# cd /var/lib/docker/volumes/e22a9b39372615727b964151b6c8108d6c02b13114a3fcce255df0cee7609e15/_data
+
+
+# ls  ( we can see all the files )
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Creating customized docker images
+----------------------------------------
+
+Whenever docker container is deleted, 
+all the softwares that we have installed within the container will also be deleted.
+
+
+
+If we can save the container as an image, then we can preserve the softwares.
+
+
+This creation of customized docker images can be done in two ways.
+
+1) using docker commit command
+2) using docker file
+
+
+
+
+Using docker commit
+----------------------
+
+# docker run  --name c11 -it  ubuntu
+
+
+Update apt repository
+
+# apt-get update
+# apt-get install git
+ 
+TO check the git
+# git  --version
+# exit
+
+TO save the container as image (snapshot )
+# docker commit   c11   myubuntu
+
+To see the list of images
+# docker images  ( you can see the image which you have created )
+
+++++++++++++++++++++++
+Now lets run the image which we have created
+# docker run --name c22 -it   myubuntu
+
+
+# git --version  ( git is pre installed )
+
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Creating customized docker images
+----------------------------------------
+
+Whenever docker container is deleted, 
+all the softwares that we have installed within the container will also be deleted.
+
+
+
+If we can save the container as an image, then we can preserve the softwares.
+
+
+This creation of customized docker images can be done in two ways.
+
+1) using docker commit command
+2) using docker file
+
+
+
+
+Using docker commit
+----------------------
+
+# docker run  --name c11 -it  ubuntu
+
+
+Update apt repository
+
+# apt-get update
+# apt-get install git
+ 
+TO check the git
+# git  --version
+# exit
+
+TO save the container as image (snapshot )
+# docker commit   c11   myubuntu
+
+
+
+
+
+To see the list of images
+# docker images  ( you can see the image which you have created )
+
+++++++++++++++++++++++
+Now lets run the image which we have created
+# docker run --name c22 -it   myubuntu
+
+
+# git --version  ( git is pre installed )
+
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+--------------------------
+Using docker file
+--------------------
+This is a simple text file, which uses  predefinied keywords for creating customized docker images.
+
+Key words used in docker file  ( case sensitive )
+
+1) FROM  --  used to specify the base image from which the docker file has to be created.
+
+2) MAINTAINER -- This represents name of the organization or the
+ author who created this docker file.
+
+3) CMD   -- This is used to specify the initial command that should be executed when the container 	starts.
+
+4) ENTRYPOINT - used to specify the default process that should be executed when container starts.
+It can also be used for accepting arguments from the CMD instruction.
+
+5) RUN  -- Used for running linux commands within the container. It is generally helpful for installing the software in the container.
+
+6) USER  --      used to specify the default user who should login into the container.
+
+7) WORKDIR --  
+    Used to specify default working directory in the container
+
+8) COPY  --  Copying the files from the host machine to the container.
+
+9) ADD  -- Used for copying files  from host to container, it can also be used for downloading files from remote servers.
+
+10) ENV  --  used for specifying the environment variables that should be passed to the container.
+
+EXPOSE -- Used to specify the internal port of the container
+VOLUME  --  used to specify the default volume that should be attached to the container.
+LABEL  --  used for giving label to the container
+STOPSIGNAL  -- Used to specify the key sequences that have to be passed in order to stop the container.
+
++++++++++++++++++++++
+
++++++++++++++++++++++++++++++++++
+
+Create a dockerfile by taking nginx as the base image 
+and specify the maintainer as logiclabs. Construct an image from the dockerfile.
+
+Creating customized docker images by using docker file.
+
+$ sudo su -
+# vi dockerfile
+
+FROM nginx
+MAINTAINER logiclabs
+
+:wq
+
+
+
+TO build an image from the dockerfile
+# docker build -t  mynginx  . 
+
+
+
+
+ ( t stands for tag, 
+    .  stands for current working dir
+   mynginx is the new image name    )
+
+
+
+
+TO see the image
+# docker images
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+
+When ever i start my container, i want a program to get executed.
+
+# vi dockerfile
+
+FROM centos
+MAINTAINER logiclabs
+CMD ["date"]
+
+:wq
+
+TO build an image from the dockerfile
+# docker build -t  mycentos  . 
+
+TO see the image
+# docker images
+
+Running conainer from the image
+# docker run -it   mycentos
+
+
+++++++++++++++++++++++++++
+
+In one docker file, we can have one CMD instruction.
+If we give two  CMD instruction, it executes the latest one
+Lets try
+
+
+
+# vi dockerfile
+FROM centos
+MAINTAINER logiclabs
+CMD ["date"]
+CMD ["ls", "-la"]
+
+:wq
+
+# docker build -t  mycentos . 
+
+# docker run -it   mycentos
+( Observation, we get ls -la output )
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+In ubuntu container, I want to install git in it.
+
+
+Lets remove the docker file
+# rm dockerfile
+#  vi dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+RUN apt-get update
+RUN apt-get install -y git
+
+:wq
+
+
+Note:  CMD  -- will run  when container starts.
+       RUN  --  will executed when image is created.
+
+
+# docker build -t  myubuntu . 
+
+Lets see the images list and space consumed by  our  image
+# docker images
+
+# docker run -it   myubuntu
+# git  --version
+# exit
+
+
+++++++++++++++++++++++++++++++++++
+
+Lets perform version controlling  in docker file
+---------------------------------------------------------
+
+
+# mkdir  docker 
+# mv dockerfile  docker
+# cd docker
+# ls
+
+
+docker# git init
+docker# git status  
+docker# git add .
+
+docker# git commit  -m "a"
+
+( we get error we need to config git)
+docker# git config --global user.name "sunildevops77"
+docker# git config --global user.email "sunildevops77@gmail.com"
+
+Now, run the above commit command  ( git commit )
+
+docker# vim dockerfile  ( lets make some changes add another RUN command )
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y default-jdk
+
+:wq
+
+docker# git add .
+docker# git commit  -m "b"
+
+Now lets see the docker file
+# vim dockerfile  ( we see the latest one )
+
+Now, I want to have previous version
+# git log  --oneline  (  to see the list of all the commits)
+
+We want to move to "a" commit  ( take note of commit id )
+
+# git reset --hard  10841c3
+
+
+
+
+Now lets see the docker file
+# vim dockerfile  ( we see the old one )
+
++++++++++++++++++++++++++++++++++++
+
+
+
+Cache busting
+------------------
+Whenever an image is build from a dockerfile, docker reads its memory and checks which instructions were already executed. 
+These steps will not be reexecuted. 
+It will execute only the latest instructions. This is a time saving mechanism provided by docker. 
+
+But, the disadvantage is, we can end up installing software packages  from a repository which is updated long time back. 
+
+
+Ex:
+
+# cd docker
+# vim dockerfile
+
+Lets just add one more instruction
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y tree                 
+
+
+:wq
+
+
+Lets build an image
+# docker build -t myubuntu  .
+
+
+( Observe the output,  Step 2, 3, 4 is using cache.  Only step 5 is executed freshly )
+
+Advantage: time saving mechanism
+
+
+
+Disadvantage : Lets say, you are running after 4 months, We are installing tree from apt which is updated long time back. )
+
+
+TO avoid this disadvanatge we use cache busting
+-----------------------------------------------------
+Note: cache busting is implemented using && symbol.
+Which ever statement in the docker file has &&  will be re-executed. 
+
+# vim dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update && apt-get install -y git tree
+
+:wq
+
+Lets build an image
+# docker build -t myubuntu .
+
+( Observe the output, step 3  - It is not using cache )
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
+In ubuntu container, I want to install git in it.
+
+
+Lets remove the docker file
+# rm dockerfile
+#  vi dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+RUN apt-get update
+RUN apt-get install -y git
+
+:wq
+
+
+Note:  CMD  -- will run  when container starts.
+       RUN  --  will executed when image is created.
+
+
+# docker build -t  myubuntu . 
+
+Lets see the images list and space consumed by  our  image
+# docker images
+
+# docker run -it   myubuntu
+# git  --version
+# exit
+
+
+++++++++++++++++++++++++++++++++++
+
+Lets perform version controlling  in docker file
+---------------------------------------------------------
+
+
+# mkdir  docker 
+# mv dockerfile  docker
+# cd docker
+# ls
+
+
+docker# git init
+docker# git status  
+docker# git add .
+
+docker# git commit  -m "a"
+
+( we get error we need to config git)
+docker# git config --global user.name "sunildevops77"
+docker# git config --global user.email "sunildevops77@gmail.com"
+
+Now, run the above commit command  ( git commit )
+
+docker# vi dockerfile  ( lets make some changes add another RUN command )
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y default-jdk
+
+:wq
+
+docker# git add .
+docker# git commit  -m "b"
+
+Now lets see the docker file
+# vim dockerfile  ( we see the latest one )
+
+Now, I want to have previous version
+# git log  --oneline  (  to see the list of all the commits)
+
+We want to move to "a" commit  ( take note of commit id )
+
+# git reset --hard  6b6a0a9
+
+
+
+
+Now lets see the docker file
+# vim dockerfile  ( we see the old one )
+
++++++++++++++++++++++++++++++++++++
+
+
+
+Cache busting
+------------------
+Whenever an image is build from a dockerfile, docker reads its memory and checks which instructions were already executed. 
+These steps will not be reexecuted. 
+It will execute only the latest instructions. This is a time saving mechanism provided by docker. 
+
+But, the disadvantage is, we can end up installing software packages  from a repository which is updated long time back. 
+
+
+Ex:
+
+# cd docker
+# vi dockerfile
+
+Lets just add one more instruction
+
+FROM ubuntu
+MAINTAINER logiclabs
+
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y tree                 
+
+
+:wq
+
+
+Lets build an image
+# docker build -t myubuntu  .
+
+
+( Observe the output,  Step 2, 3, 4 is using cache.  Only step 5 is executed freshly )
+
+Advantage: time saving mechanism
+
+
+
+Disadvantage : Lets say, you are running after 4 months, We are installing tree from apt which is updated long time back. )
+
+
+TO avoid this disadvanatge we use cache busting
+-----------------------------------------------------
+Note: cache busting is implemented using && symbol.
+Which ever statement in the docker file has &&  will be re-executed. 
+
+# vi dockerfile
+
+FROM ubuntu
+MAINTAINER logiclabs
+RUN apt-get update && apt-get install -y git tree
+
+:wq
+
+Lets build an image
+# docker build -t myubuntu .
+
+
+
+( Observe the output, step 3  - It is not using cache )
+
+-----------------------------
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Working on docker registry
+Registry is a location where docker images are saved.
+Types of registry
+1) public registry
+2) private registry
+
+public registry is hub.docker.com
+Images uploaded here are available for everyone.
+
+
+Usecase: Create a customized ubuntu image, by installing  tree in it.
+
+Save this container as an image, and upload this image in docker hub.
+
+Step 1: Create a new account in hub.docker.com
+
+Step 2: Creating our own container
+# docker run --name  c5 -it  ubuntu
+
+Lets install tree package in this container
+/# apt-get update
+/#  apt-get  install tree
+/# exit
+
+Step 3: Save the above container as an image
+# docker commit  c5  sunildevops77/ubuntu_img0605
+( sunildevops77/ubuntu_img18  -- is the image name )
+
+Note: Image name should start with docker_id/
+
+To see the list of images
+# docker image ls  ( we can see the new image )
+
+TO upload the image to hub.docker.com  ( docker login command is used )
+-------------------------------------------
+# docker login   ( provide docker_id and password )
+
+To upload the image
+# docker push  <image_name>
+# docker push sunildevops77/ubuntu_img07
+
+
+
+login to docker hub to see your image
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+Container orchestration
+------------------------
+This is the process of running docker containers in a distributed environment, on multiple docker host machines.
+
+All these containers can have a single service running on them and they share the resources between eachother, even running on different host machines.
+
+Docker swarm is the tool used for performing container orchestration
+
+
+Advantages
+--------------
+1) Load balancing
+2) scaling of containers
+3) performing rolling updates
+4) handling failover scenarios
+
+ 
++++++++++++++++++++++++++++++
+
+Machine on which docker swarm is installed is called as manager.
+Other machines are called as workers.
+
+
+Lets create 3 machines
+Name is as Manager, Worker1, Worker2
+
+All the above machines should have docker installed in it.
+Install docker using get.docker.com
+
+( Optional step to change the  prompt )
+After installing docker in the 1st machine ( Manager ),  Lets change the host name.
+Host name will be available in the file hostname. We will change the hostname to manager.
+
+# vi /etc/hostname
+Manager
+
+:wq
+
+After changing the hostname, lets restart the machine
+# init 6
+
++++++++++++++++++++++++++++
+Similary repeat the same in worker1 and worker2
+
+++++++++++++++++++++++++++++++++++++
+Connect to Manager, install docker swarm in it.
+
+$ sudo su -
+
+Command to install docker swarm  in manager machine
+
+# docker swarm init --advertise-addr  private_ip_of_manager
+# docker swarm init --advertise-addr  172.31.47.133
+
+Please read the log messages
+
+Now, we need to add workers to manager
+Copy the  docker swarm join command in the log and run in the worker1  and worker2
+
+Open another gitbash terminal, connect to worker1
+
+sudo su -
+
+# docker swarm join --token SWMTKN-1-0etsmfa26vreeytq278q8ohhi73il7j1lpnrzzlowuld1r8yex-9x04pjmiq85jxjzjayzlglh1c 172.31.27.151:2377
+
+Repeat for worker2
+
++++++++++++++++++++++++++++++
+TO see the no of nodes from the manager
+
+Manager # docker  node ls   ( we can see manager, worker1  and worker 2)
+
++++++++++++++++++
+
+Load balancing:
+Each docker container is designed to withstand a specific  user load.
+When the load increases, we can replica containers in docker swarm and distribute the load.
+
+Ex: Start tomcat in docker swarm with 5 replicas and name it as webserver.
+
+Manager# docker service create --name webserver -p 9090:8080   --replicas 5     tomee
+
+( 5 conainers with the same service, distributed load in 3 machines)
+
+
+
+
+
+
+
+How to see where thay are running?
+Manager# docker service  ps  webserver
+
+Lets take the note
+Manager - 2 container
+Worker1 - 2 container
+Worker2 - 1 container
+
+++++++++++++++++++++++++++++++++++++++++
+Note: Only one tomcat is running and load is shrared to 3 machines
+
+Lets check
+public_ip_manager:9090  ( Will show tomcat page )
+public_ip_worker1:9090  ( Will show tomcat page )
+public_ip_worker2:9090  ( Will show tomcat page )
+
+13.235.0.247:9090
+13.201.7.161:9090
+
+15.207.106.65:9090  
+
+
+
+
+++++++++++++++++++++++++++++++++++++
+
+Ex 2:  Start mysql in docker swarm with 3 replicas.
+
+Manager# docker service create --name mydb --replicas 3   -e MYSQL_ROOT_PASSWORD=sunil   mysql:8
+
+How to see where thay are running?
+Manager# docker service  ps  mydb
+
+To know the total no of services running in docker swarm
+Manager# docker service ls
+
++++++++++++++++++++++++++++++++++++
+If you delete a container, it will create another container.
+
+Now,
+Manager# docker service  ps  mydb
+
+We can see one container is running in  Manager machine
+I want to delete the container which is running in manager
+
+Manager# docker container ls
+( we can see 1 mysql container, 1 tomcat container )
+
+Take note of the container_id  of mysql
+758c98a0483c
+
+
+
+TO delete the container
+# docker rm -f   758c98a0483c
+
+
+
+
+
+
+Now lets check the mydb service
+# docker service  ps  mydb ( we can see one service is failed, automatically 2nd service is started)
+At anypoint of time, 3 container will be running.
+
+
++++++++++++++++++++++++++++++++++++++++++++
+Scaling of containers
+When business requirement increases, we should be able to increase the no of replicas.
+Similarly, we should also be able to decrease the replica count based on business requirement. This scaling should be done without any downtime.
+ 
+Ex 3:  Start nginx with 5 replicas, later scale the services to 10.
+
+
+# docker service  create  --name appserver -p 8080:80  --replicas 5 nginx
+
+# docker service ps appserver
+
+Command to scale
+# docker service scale  appserver=10
+
+To check
+# docker service ps appserver
+
+Now I want only two containers
+# docker service scale  appserver=2
+
+To check
+# docker service ps appserver
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To remove a node from the docker swarm
+Two ways
+1) Manager can drain
+2) Node can leave
+
+
+
+
+To see the list of nodes
+# docker node ls
+
+# docker node update --availability drain  Worker1
+
+All the container running in Worker1 , will be migrated to Worker2 or manager.
+
+# docker service ps mydb
+# docker node ls
+
+To add the node
+# docker node update --availability active  worker1
+
+# docker node ls
+
+
+2nd Way  ( Node can leave )
+----------------
+Lets Connect to worker2 from git bash
+
+Worker2# docker swarm leave
+
+++++++++++++++++++++++++++++++++++++++++
+
+TO see the list of services
+# docker service ls
+
+TO delete the services
+Manager# docker service rm appserver mydb webserver
+
+Rolling Updates
+--------------------
+The services running in docker swarm, can be updated to any other version
+without any downtime. 
+This is perfomed by docker swarm by updating one replica after another. This is called as rolling update.
+
+Ex: Create redis 3 service with 6 replicas. Update from redis 3 to redis 4 version.
+
+docker service create --name myredis --replicas 6 redis:3
+
+To check the replicas
+docker service ps myredis
+
+To update
+# docker service update --image redis:4 myredis
+
+docker service ps myredis 
+
+I want to display running containers not shutdown containers
+
+# docker service ps myredis | grep Shutdown  ( We get shutdown container )
+# docker service ps myredis | grep -v Shutdown ( -v used for inverse operation )
+
+++++++++++++++++++++++++++++++++++
+Performing rolling rollback , to downgrade to redis:3 version
+
+# docker service update --rollback myredis
+
+To check redis:3 is running with 6 replicas and other version are shutdown.
+# docker service ps myredis
+	
+++++++++++++++++++++++++++++
+TO add new nodes, in future, we need to docker swarm join command.
+To generate the command
+
+# docker swarm  join-token  worker  ( We will get the command )
+
+ docker swarm join --token SWMTKN-1-0etsmfa26vreeytq278q8ohhi73il7j1lpnrzzlowuld1r8yex-9x04pjmiq85jxjzjayzlglh1c 172.31.27.151:2377
+
++++++++++++++++++++++
+To add a new machine as a manager
+
+# docker swarm  join-token  manager
+
+docker swarm join --token SWMTKN-1-5wbamgr8x7gxabwtlm1j1i91bm5ilzotgna6bc0edubtwtjxi1-3jmzi67qdn5aawvielkcng2e4 172.31.34.112:2377
+
++++++++++++++++++++++
+If there are two managers, one will be leader
+
+
+# docker node ls   ( we can see who is the leader )
+Decision of which is machine should be leader is automatic.
+
+If one manager goes down, other manager automatically become leader.
+
+++++++++++++++++++++++++++++++++++++++
+To promote worker1 as a manager node
+# docker node promote Worker1
+
+To demote Worker1 and make him back as a worker
+# docker node demote Worker1
+
+++++++++++++
+
+
+
+
+
+
+
+Container orchestration
+------------------------
+This is the process of running docker containers in a distributed environment, on multiple docker host machines.
+
+All these containers can have a single service running on them and they share the resources between eachother, even running on different host machines.
+
+Docker swarm is the tool used for performing container orchestration
+
+
+Advantages
+--------------
+1) Load balancing
+2) scaling of containers
+3) performing rolling updates
+4) handling failover scenarios
+
+ 
++++++++++++++++++++++++++++++
+
+Machine on which docker swarm is installed is called as manager.
+Other machines are called as workers.
+
+
+Lets create 3 machines
+Name is as Manager, Worker1, Worker2
+
+All the above machines should have docker installed in it.
+Install docker using get.docker.com
+
+( Optional step to change the  prompt )
+After installing docker in the 1st machine ( Manager ),  Lets change the host name.
+Host name will be available in the file hostname. We will change the hostname to manager.
+
+# vi /etc/hostname
+Manager
+
+:wq
+
+After changing the hostname, lets restart the machine
+# init 6
+
++++++++++++++++++++++++++++
+Similary repeat the same in worker1 and worker2
+
+++++++++++++++++++++++++++++++++++++
+Connect to Manager, install docker swarm in it.
+
+$ sudo su -
+
+Command to install docker swarm  in manager machine
+
+# docker swarm init --advertise-addr  private_ip_of_manager
+# docker swarm init --advertise-addr  172.31.47.133
+
+Please read the log messages
+
+Now, we need to add workers to manager
+Copy the  docker swarm join command in the log and run in the worker1  and worker2
+
+Open another gitbash terminal, connect to worker1
+
+sudo su -
+
+# docker swarm join --token SWMTKN-1-0etsmfa26vreeytq278q8ohhi73il7j1lpnrzzlowuld1r8yex-9x04pjmiq85jxjzjayzlglh1c 172.31.27.151:2377
+
+Repeat for worker2
+
++++++++++++++++++++++++++++++
+TO see the no of nodes from the manager
+
+Manager # docker  node ls   ( we can see manager, worker1  and worker 2)
+
++++++++++++++++++
+
+Load balancing:
+Each docker container is designed to withstand a specific  user load.
+When the load increases, we can replica containers in docker swarm and distribute the load.
+
+Ex: Start tomcat in docker swarm with 5 replicas and name it as webserver.
+
+Manager# docker service create --name webserver -p 9090:8080   --replicas 5     tomee
+
+( 5 conainers with the same service, distributed load in 3 machines)
+
+
+
+
+
+
+
+How to see where thay are running?
+Manager# docker service  ps  webserver
+
+Lets take the note
+Manager - 2 container
+Worker1 - 2 container
+Worker2 - 1 container
+
+++++++++++++++++++++++++++++++++++++++++
+Note: Only one tomcat is running and load is shrared to 3 machines
+
+Lets check
+public_ip_manager:9090  ( Will show tomcat page )
+public_ip_worker1:9090  ( Will show tomcat page )
+public_ip_worker2:9090  ( Will show tomcat page )
+
+13.235.0.247:9090
+13.201.7.161:9090
+
+15.207.106.65:9090  
+
+
+
+
+++++++++++++++++++++++++++++++++++++
+
+Ex 2:  Start mysql in docker swarm with 3 replicas.
+
+Manager# docker service create --name mydb --replicas 3   -e MYSQL_ROOT_PASSWORD=sunil   mysql:8
+
+How to see where thay are running?
+Manager# docker service  ps  mydb
+
+To know the total no of services running in docker swarm
+Manager# docker service ls
+
++++++++++++++++++++++++++++++++++++
+If you delete a container, it will create another container.
+
+Now,
+Manager# docker service  ps  mydb
+
+We can see one container is running in  Manager machine
+I want to delete the container which is running in manager
+
+Manager# docker container ls
+( we can see 1 mysql container, 1 tomcat container )
+
+Take note of the container_id  of mysql
+3e7f67739665
+
+
+
+TO delete the container
+# docker rm -f   3e7f67739665
+
+
+
+
+
+
+Now lets check the mydb service
+# docker service  ps  mydb ( we can see one service is failed, automatically 2nd service is started)
+At anypoint of time, 3 container will be running.
+
+
++++++++++++++++++++++++++++++++++++++++++++
+Scaling of containers
+When business requirement increases, we should be able to increase the no of replicas.
+Similarly, we should also be able to decrease the replica count based on business requirement. This scaling should be done without any downtime.
+ 
+Ex 3:  Start nginx with 5 replicas, later scale the services to 10.
+
+
+# docker service  create  --name appserver -p 8080:80  --replicas 5 nginx
+
+# docker service ps appserver
+
+Command to scale
+# docker service scale  appserver=10
+
+To check
+# docker service ps appserver
+
+Now I want only two containers
+# docker service scale  appserver=2
+
+To check
+# docker service ps appserver
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To remove a node from the docker swarm
+Two ways
+1) Manager can drain
+2) Node can leave
+
+
+
+
+To see the list of nodes
+# docker node ls
+
+# docker node update --availability drain  Worker1
+
+All the container running in Worker1 , will be migrated to Worker2 or manager.
+
+# docker service ps mydb
+# docker node ls
+
+To add the node
+# docker node update --availability active  worker1
+
+# docker node ls
+
+
+2nd Way  ( Node can leave )
+----------------
+Lets Connect to worker2 from git bash
+
+Worker2# docker swarm leave
+
+++++++++++++++++++++++++++++++++++++++++
+
+TO see the list of services
+# docker service ls
+
+TO delete the services
+Manager# docker service rm appserver mydb webserver
+
+Rolling Updates
+--------------------
+The services running in docker swarm, can be updated to any other version
+without any downtime. 
+This is perfomed by docker swarm by updating one replica after another. This is called as rolling update.
+
+Ex: Create redis 3 service with 6 replicas. Update from redis 3 to redis 4 version.
+
+docker service create --name myredis --replicas 6 redis:3
+
+To check the replicas
+docker service ps myredis
+
+To update
+# docker service update --image redis:4 myredis
+
+docker service ps myredis 
+
+I want to display running containers not shutdown containers
+
+# docker service ps myredis | grep Shutdown  ( We get shutdown container )
+# docker service ps myredis | grep -v Shutdown ( -v used for inverse operation )
+
+++++++++++++++++++++++++++++++++++
+Performing rolling rollback , to downgrade to redis:3 version
+
+# docker service update --rollback myredis
+
+To check redis:3 is running with 6 replicas and other version are shutdown.
+# docker service ps myredis
+	
+++++++++++++++++++++++++++++
+TO add new nodes, in future, we need to docker swarm join command.
+To generate the command
+
+# docker swarm  join-token  worker  ( We will get the command )
+
+ docker swarm join --token SWMTKN-1-0etsmfa26vreeytq278q8ohhi73il7j1lpnrzzlowuld1r8yex-9x04pjmiq85jxjzjayzlglh1c 172.31.27.151:2377
+
++++++++++++++++++++++
+To add a new machine as a manager
+
+# docker swarm  join-token  manager
+
+docker swarm join --token SWMTKN-1-5wbamgr8x7gxabwtlm1j1i91bm5ilzotgna6bc0edubtwtjxi1-3jmzi67qdn5aawvielkcng2e4 172.31.34.112:2377
+
++++++++++++++++++++++
+If there are two managers, one will be leader
+
+
+# docker node ls   ( we can see who is the leader )
+Decision of which is machine should be leader is automatic.
+
+If one manager goes down, other manager automatically become leader.
+
+++++++++++++++++++++++++++++++++++++++
+To promote worker1 as a manager node
+# docker node promote Worker1
+
+To demote Worker1 and make him back as a worker
+# docker node demote Worker1
+
+++++++++++++
+
+
+
+
+#    curl -fsSL https://get.docker.com -o get-docker.sh
+#    sh get-docker.sh
+
+--------------------------------
+
+docker run -d -P nginx
+
+
+docker ps
+( we can see nginx container running )
+Take note of container id and inspect the container
+
+docker inspect  dad281da8a2e
+
+
+
+
+Note: we can see the IP address
+   "IPAddress": "172.17.0.2",
+
+Note: Every container will have IP address
+
+
+Lets take note of docker host IP address - Internal IP -  ( from aws console )
+172.31.7.87
+
+Do you think, they both are the same?
+NO
+How conatiner get IP address?
+
+Note: When we install docker, docker installs a network by default in the host machine called docker0.
+Docker0 network comes with default series   -  172.x.x.x
+Lets check docker0 network.
+
+# ip a     ( we get all networks in the machine )
+
+Observation: we get docker0 also.
+Observe the series -  172.17.0.1
+Container IP address are taken from docker0 network.
+
++++++++++++++++++++++++++++++
+
+
+Lets create another container
+
+#  docker run -d -P redis
+
+# docker ps   ( we can see two containers are running )
+
+Take note of redis container id
+659994d0e684
+
+#  docker inspect 6e615dfe9dcd
+
+It takes the next ip address from same series
+
+ "IPAddress": "172.17.0.3",
+
+++++++++++++++++++++++++
+
+Now, can these two container communicate with each other?
+To check whether containers can communicate with each other or not
+Lest create busybox container, as it containes ping utility.
+
+# docker run -d  --name tester1  busybox:1.28 sleep 3600
+
+# docker ps  ( we can see 3 container running )
+
+I want to check, if the containers are connected are not?
+
+Take note of container id of busybox
+315e890fcf4e  -- container id of busybox
+
+6e615dfe9dcd  -- container id of redis
+
+
+# docker exec 315e890fcf4e ping 6e615dfe9dcd
+
+
+
+
+
+
+
+
+
+Is it pinging?  
+No
+
+So, with docker0 network  we cannot ping with container ids
+
+
+
+
+Lets try to ping with container name
+-------------------------------------------
+
+Take note of container name of redis
+serene_kapitsa
+
+# docker exec 315e890fcf4e ping serene_kapitsa
+
+
+
+Is it pinging?  
+No
+
+So, with docker0 network  we cannot ping with container name
+
+Lets try to ping with IP address
+----------------------------------------
+
+Take note of container IP of redis
+# docker exec 315e890fcf4e ping 172.17.0.2   (  172.17.0.2   -- ip address of nginx )
+
+#  docker exec 315e890fcf4e ping 172.17.0.3   (  172.17.0.3   -- ip address of redis )
+
+Yes!!! it works.
+
+So, By using docker0 network, one container can communicate to another container by using IP address.
+
+
+++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+Assume, you have two containers
+1st one is application container
+2nd one is db container
+
+I want to communicate from application container with DB container.
+Generally Application container will have the code to connect to DB 
+like jdbc:odbc:dbname:dbport/schema/
+
+
+
+When both the containers are running on docker0 network.
+Instead of dbname , we should mention IP address
+like jdbc:odbc:IP:dbport/schema/
+
+Now, Is IP address of container is permanent?
+NO
+
+
+
+
+
+
+When conainer acquires new IP, we have connection issues.
+So,
+jdbc:odbc:IP:dbport/schema/  --  is not valid
+
+This is the drawback of docker0
+
+
+
+
+
+
+
+
+
+
+We can use --link option for linking two containers.
+--link option is outdated.
+
+At enterprise level  We will create our own network.
+using Custom networks, we can ping the containers using container name.
+
+Lets remove all the containers
+# docker rm  -f  $(docker ps -aq)
+
+To create a new network
+
+# docker network create  sunil
+
+
+we get network id
+
+6405cb5efc42545bd27f3439098c2cae18418c21faabfb2d642e35fb297c8aaa
+
+
+
+
+To get the network information
+
+# docker inspect  sunil
+
+Observe gateway  series
+
+  "Gateway": "172.18.0.1"
+
+
+++++++++++++++++
+
+Now, we can create containers in "sunil" network
+
+# docker run -d -P --name app --net sunil  nginx
+
+(  --net is used to assign network to the container )
+
+# docker ps  ( we can see nginx container is running )
+
+To know the IP address of the container
+# docker inspect  app
+
+ "IPAddress": "172.18.0.2",
+
+We get custom network IP series
+
+Lets create one more container in Sunil network
+
+# docker run -d -P --name mybox --net sunil busybox:1.28 sleep 3600
+
+# docker ps ( we can see two containers )
+
+I want to check, if containers can be communicated using name
+
+Lets enter into busybox
+# docker exec -it 55bc7c3cecf7  sh
+
+#  ip a    ( its a linux command, which will show list of network adapters)
+We can see the ip
+ inet 172.18.0.3
+
+++++++++++++
+
+Now from busybox, I want to ping nginx container
+/ # ping 172.18.0.2
+
+Yes!! It pings
+
+I want to ping with name
+
+/# ping app
+
+Yes!! It pings!!!!!!!!!!!!!
+
+Similary we can also ping with container ID
+
+We avoid links, we used Custom networks  
+
+/#  exit
+
+To see the list of container in a network
+#  docker inspect  sunil
+
+
+Lets create a redis container again
+-------------------------------------
+# docker run -d -P redis
+
+As we have not mentiond network information, by default it takes docker0 network.
+
+# docker ps ( to see the list of container )
+
+redis belongs to docker0 network
+app  belongs to sunil network.
+
+do you think app container will communicate to redis?
+They cannot communicate.
+
+# docker ps
+
+Take note of redis container id
+
+3a13293df6cf
+
+
+# docker network connect sunil 2545cf74608e
+
+
+
+The above command  is used to connect redis container to sunil network
+
+Now, inspect the redis container
+
+# docker inspect 2545cf74608e
+
+
+Now, its part of two networks.
+
+
+Now, redis can be pinged from app container or busybox container
+
+# docker exec -it 4f110bebbfb3  sh
+
+/ # ping 93c81bf83f1c
+
+It works!!!
+
+/ # exit
+
+
+To see the list of networks
+
+# docker network ls
+
+
++++++++++++++++++++++++++++++++
+
+
+
+Types of networks in Docker
+------------------------------
+
+Actually, they are not networks. They are network drivers.
+
+Docker follows CNM ( Container Network Model ), By using which container capabilities come to docker by defualt.
+
+There are Following network drivers in-built
+-----------------------------------------
+1) Bridge
+2) Host
+3) None
+4) Overlay
+
+
+Last session, we have experienced two types of networks.
+1. Docker0
+2. sunil ( Custom network )
+
+By default docker0 is of type bridge network.
+
+
+
+
+In bridge networks, container on one machine can communicate to another container, in the same machine.
+By default type is bridge.
+
+# docker network ls
+
+We can see "sunil"  network is of type bridge.
+
+
+Bridge network is confined to one machine only.
+
+
+Host Network
+----------------------
+Assume, I am running a database.
+
+I want to use machine IP as the container IP
+It is possible by using Host network.
+
+We already have host network available.
+
+# docker network ls
+
+We can see one host network
+
+
+# docker run -d -P   --net host    nginx
+
+
+# docker container ps
+
+
+
+Observe: There is no port no
+Eventhough we have mentioned -P, is has not published port.
+We can access directly using IP without port, to connect to the container.
+
+Take the public IP of the Dockerhost and access using default port.
+
+35.154.109.213:80
+
+
+13.233.156.196:80
+
+13.127.218.160:80
+
+We get the nginx page
+
+Ok. fine.
+
+But, can we create the same container again?
+No!
+
+# docker run -d -P --net host  nginx
+
+
+
+As, 80 port number is already published
+When we create another container,It will not be in running.
+
+
+# docker ps
+We can see only one container.
+
+# docker ps -a
+We can see the latest container is exited.
+
+To know, Why the container is exited?
+Take note of the container id, which is exited
+
+
+074270ee9f1b
+
+
+# docker logs 074270ee9f1b
+
+
+
+We can see clearly  as " Address already in use"
+
+So, with host network, one type of image we can use only once.
+
+
+Null Network
+----------------
+Refers to no network.
+If we do  not want the container to get exposed to the world.
+
+# docker run -d -P --net none redis
+
+# docker ps
+Take note of container id
+704242fbd0fa
+
+# docker inspect 704242fbd0fa
+
+We do not see any IP for the container
+
+"IPAddress": ""
+
+When none network is used?
+When we use orchestration tools like Kubernetes or openshift.
+If you want orchestration tools to take of networking, in such case we do not want docker networking.
+In such case we use none network of docker.
+
++++++++++++++++++++++++++
+
+In realtime, we know, container will be running on multiple machines ( docker swarm ).
+When container present in one machine, want to communicate to container in another machine
+
+# docker info
+
+We can see - Swarm in inactive
+
+ Swarm: inactive
+
+I want to initialize swarm
+
+#  docker swarm init
+
+Now, lets see the list of networks
+
+# docker network ls
+
+Observer, a new network is created of type "overlay"
+Name of the network is ingress
+
+One machine container can communicate to another machine container using overlay network.
+
+Lets inspect ingress network.
+
+# docker inspect  ingress
+
+Observe the IP address, Lets take a note of it.
+
+ "IPv4Address": "10.0.0.2
+
+Now, when we create container using service concept,
+The container uses overlay network.
+Docker swarm uses overlay network.
+
+# docker service create --name s1 --replicas 5 -p 1234:80 nginx
+
+As we have one machine right now.
+All the container will be running in the same machine ( Manager )
+
+# docker ps
+
+I want to know the IP addres of the 1st container.
+Take note of the 1st container ID
+392ffcb8aaa1
+
+# docker inspect  392ffcb8aaa1
+
+
+
+Observer the IP address is  
+"IPAddress": "10.0.0.7"
+It has taken overlay network series.
+
+So, swarm uses existing overlay network for communication between containers on different machines.
+
++++++++++++++++++++++++++
+
+Can we create our own overlay network?
+Yes!!
+
+Lets create
+
+# docker network create ol1 --driver overlay
+
+# docker network ls  ( to see the list of networks )
+
+We can see ol1  network is created of type overlay
+
+# docker inspect ol1  (  To know the series it is taking )
+
+ "Subnet": 10.0.1.0
+
+It has taken 1.0 series
+
++++++++++++++++++++++++
+Lets delete the existing service
+
+# docker service rm  s1
+
+Lets remove all the existing containers
+
+# docker rm -f `docker ps -aq`
+
+Lets create service on ol1 network
+
+# docker service create --name mynginx --replicas 5 --network ol1 -p 1224:80   nginx
+
+# docker ps
+Take note of the 1st container id
+
+6c1209a48f82
+
+
+# docker inspect 6c1209a48f82
+
+
+
+
+We can see the network as ol1. And the Ip address series.
+
+ "ol1": {
+                    "IPAMConfig": {
+                        "IPv4Address": "10.0.1.7"
+
+We generally used bridge and overlay networks.
+
++++++++++++++++++++++++++++++++++++++
+
